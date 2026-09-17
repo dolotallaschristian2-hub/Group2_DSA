@@ -6,5 +6,7 @@ public class FoodDelivery {
        
         fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
         fooddelivery.setVisible (true);
+        
+        
     }
 }

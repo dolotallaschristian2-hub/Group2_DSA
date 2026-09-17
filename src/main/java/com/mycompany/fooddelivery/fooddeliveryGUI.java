@@ -54,15 +54,20 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         btnregister.setBounds(230, 420, 100, 40);
         add(btnregister);
         
-        
-               
+       btnlogin.addActionListener(this);
+       btnregister.addActionListener(this);        
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == btnlogin){
-           String password =new String(jpfpass.getPassword());
-           JOptionPane.showMessageDialog(this, username, "Login", JOptionPane.INFORMATION_MESSAGE);
+           String password = new String(jpfpass.getPassword());
+           JOptionPane.showMessageDialog(this, "Maglagay ka Bisaya", "Login", JOptionPane.INFORMATION_MESSAGE);
+       }
+       else if(e.getSource() == btnregister){
+           register reg = new register();
+           reg.setVisible(true);
+           this.dispose();
        }
     }
 }
