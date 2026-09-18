@@ -10,6 +10,8 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     private JTextArea txauser;
     private JPasswordField jpfpass;
     private JScrollPane error;
+    final String user = "admin";
+    final String pass = "123456";
     
     fooddeliveryGUI(){
         setSize(600, 700);
@@ -62,7 +64,19 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == btnlogin){
            String password = new String(jpfpass.getPassword());
-           JOptionPane.showMessageDialog(this, "Maglagay ka Bisaya", "Login", JOptionPane.INFORMATION_MESSAGE);
+           String username = new String (txauser.getText());
+           
+           if(username.isEmpty()){
+               JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+           else if(password.isEmpty()){
+               JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+           else if(password.equals(pass) && username.equals(user)){
+           JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
+           } else {
+               JOptionPane.showMessageDialog(this, "Login Denied", "Error", JOptionPane.ERROR_MESSAGE);
+           }
        }
        else if(e.getSource() == btnregister){
            register reg = new register();
