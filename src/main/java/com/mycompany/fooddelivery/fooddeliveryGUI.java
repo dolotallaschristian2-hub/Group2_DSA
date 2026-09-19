@@ -74,6 +74,9 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
            }
            else if(password.equals(pass) && username.equals(user)){
            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
+           Homepage hm = new Homepage();
+           hm.setVisible(true);
+           this.dispose();
            } else {
                JOptionPane.showMessageDialog(this, "Login Denied", "Error", JOptionPane.ERROR_MESSAGE);
            }

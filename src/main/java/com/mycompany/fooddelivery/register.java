@@ -65,6 +65,10 @@ public class register extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this, "Plase check your password", "Error", JOptionPane.ERROR_MESSAGE);
             }else {
                 JOptionPane.showMessageDialog(this, "Account is Created", "Account", JOptionPane.INFORMATION_MESSAGE);
+                fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
+                fooddelivery.setVisible (true);
+                this.dispose();
+                
             }
         }
     }
