@@ -1,4 +1,5 @@
 package com.mycompany.fooddelivery;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -10,6 +11,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     private JTextArea txauser;
     private JPasswordField jpfpass;
     private JScrollPane error;
+    private JPanel panel;
     final String user = "admin";
     final String pass = "123456";
     
@@ -18,6 +20,8 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        setLocationRelativeTo(null);
+       
         
         //Setting of a Label Login Page
         lblheader = new JLabel ("Online Food Delivery System",SwingConstants.CENTER);
@@ -50,11 +54,19 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         //Setting of Buttons
         btnlogin = new JButton("Login");
         btnlogin.setBounds(230, 250, 100, 40);
+        btnlogin.setBackground(new Color(150, 70, 80));
         add(btnlogin);
         
         btnregister = new JButton("Register");
         btnregister.setBounds(230, 420, 100, 40);
+        btnregister.setBackground(new Color(70, 160, 90));
         add(btnregister);
+        
+        panel = new JPanel();
+        panel.setBounds(30, 100, 520, 370);
+        panel.setBackground(Color.gray);
+        add(panel);
+        
         
        btnlogin.addActionListener(this);
        btnregister.addActionListener(this);        
@@ -64,7 +76,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == btnlogin){
            String password = new String(jpfpass.getPassword());
-           String username = new String (txauser.getText());
+           String username = txauser.getText();
            
            if(username.isEmpty()){
                JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
@@ -74,8 +86,8 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
            }
            else if(password.equals(pass) && username.equals(user)){
            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
-           Homepage hm = new Homepage();
-           hm.setVisible(true);
+           Homepage home = new Homepage();
+           home.setVisible(true);
            this.dispose();
            } else {
                JOptionPane.showMessageDialog(this, "Login Denied", "Error", JOptionPane.ERROR_MESSAGE);
