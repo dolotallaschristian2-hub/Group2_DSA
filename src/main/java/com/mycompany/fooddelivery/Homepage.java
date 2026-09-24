@@ -15,6 +15,8 @@ public class Homepage extends JFrame  {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        
     }
     
 }

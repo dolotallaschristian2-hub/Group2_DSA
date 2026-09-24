@@ -1,4 +1,5 @@
 package com.mycompany.fooddelivery;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
@@ -8,6 +9,8 @@ public class register extends JFrame implements ActionListener{
     private JTextField user;
     private JPasswordField pass, confirm;
     private JButton create;
+    private JPanel panel;
+            
     
     
     public register(){
@@ -16,6 +19,7 @@ public class register extends JFrame implements ActionListener{
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
         
         username = new JLabel("Username:");
         username.setBounds(155, 150, 100, 40);
@@ -45,6 +49,11 @@ public class register extends JFrame implements ActionListener{
         create = new JButton("Create Account");
         create.setBounds(230, 250, 150, 45);
         add(create);
+        
+        panel = new JPanel();
+        panel.setBounds(130, 140, 320, 210);
+        panel.setBackground(Color.red);
+        add(panel);
         
         
        create.addActionListener(this);
