@@ -5,6 +5,8 @@ public class FoodDelivery {
     public static void main(String[] args) {
        
         fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
-        fooddelivery.setVisible (true);
+        fooddelivery.setVisible(true);
+        
+        
     }
 }
