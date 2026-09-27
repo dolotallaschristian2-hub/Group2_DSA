@@ -3,6 +3,10 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class register extends JFrame implements ActionListener{
     private JLabel username, password, again;
@@ -21,40 +25,44 @@ public class register extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         setResizable(false);
         
+        panel = new JPanel();
+        panel.setBounds(120, 120, 360, 250);
+        panel.setLayout(null);
+        add(panel);
+
+        //      LABELS
+        
         username = new JLabel("Username:");
-        username.setBounds(155, 150, 100, 40);
-        add(username);
+        username.setBounds(30, 30, 100, 40);
+        panel.add(username);
         
         password = new JLabel("Password:");
-        password.setBounds(155, 180, 100, 40);
-        add(password);
+        password.setBounds(30, 75, 100, 40);
+        panel.add(password);
         
         again = new JLabel("Confirm Password:");
-        again.setBounds(155, 210, 150, 40);
-        add(again);
+        again.setBounds(30, 120, 120, 40);
+        panel.add(again);
+       
+        //      TEXT AND PASSWORD
         
         user = new JTextField();
-        user.setBounds(225, 160, 150, 20);
-        add(user);
+        user.setBounds(140, 40, 170, 20);
+        panel.add(user);
         
         pass = new JPasswordField();
-        pass.setBounds(225, 190, 150, 20);
-        add(pass);
+        pass.setBounds(140, 85, 170, 20);
+        panel.add(pass);
         
         confirm = new JPasswordField();
-        confirm.setBounds(270, 220, 150, 20);
-        add(confirm);
+        confirm.setBounds(140, 130, 170, 20);
+        panel.add(confirm);
         
+        //      BUTTONS
         
         create = new JButton("Create Account");
-        create.setBounds(230, 250, 150, 45);
-        add(create);
-        
-        panel = new JPanel();
-        panel.setBounds(130, 140, 320, 210);
-        panel.setBackground(Color.red);
-        add(panel);
-        
+        create.setBounds(100, 170, 160, 45);
+        panel.add(create);
         
        create.addActionListener(this);
     }
@@ -72,13 +80,31 @@ public class register extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this, "Plase enter password", "Error", JOptionPane.ERROR_MESSAGE);
             }else if (!word.equals(agains)){
                 JOptionPane.showMessageDialog(this, "Plase check your password", "Error", JOptionPane.ERROR_MESSAGE);
-            }else {
-                JOptionPane.showMessageDialog(this, "Account is Created", "Account", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            } 
+                String sql = "INSERT INTO logindb.users SET username = ?, password =  ?";
+                try(Connection cn = DBConnection.getConnection()){
+                   PreparedStatement st = cn.prepareStatement(sql);
+                   
+                   st.setString(1, username);
+                   st.setString(2, word);
+                   
+                   int result = st.executeUpdate();
+                   System.out.println("Rows Inserted " + result);
+                    
+                   JOptionPane.showMessageDialog(this, "Account is Created", "Account", JOptionPane.INFORMATION_MESSAGE);
+                
                 fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
                 fooddelivery.setVisible (true);
                 this.dispose();
                 
+                
+                }catch (SQLException ex){
+                    JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+                }
+                
             }
         }
     }
-}
+
