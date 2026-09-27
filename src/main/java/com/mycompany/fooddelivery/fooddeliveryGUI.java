@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
 
 public class fooddeliveryGUI extends JFrame implements ActionListener {
     
@@ -12,11 +16,11 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     private JPasswordField jpfpass;
     private JScrollPane error;
     private JPanel panel;
-    final String user = "admin";
-    final String pass = "123456";
+    
     
     fooddeliveryGUI(){
         setSize(600, 700);
+        setTitle("Food Delivery");
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
@@ -54,12 +58,12 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         //Setting of Buttons
         btnlogin = new JButton("Login");
         btnlogin.setBounds(230, 250, 100, 40);
-        btnlogin.setBackground(new Color(150, 70, 80));
+        btnlogin.setBackground(new Color(70, 160, 90));
         add(btnlogin);
         
         btnregister = new JButton("Register");
         btnregister.setBounds(230, 420, 100, 40);
-        btnregister.setBackground(new Color(70, 160, 90));
+        btnregister.setBackground(new Color(150, 70, 80));
         add(btnregister);
         
         panel = new JPanel();
@@ -75,8 +79,9 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == btnlogin){
+         
+           String username = txauser.getText().trim();
            String password = new String(jpfpass.getPassword());
-           String username = txauser.getText();
            
            if(username.isEmpty()){
                JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
@@ -84,15 +89,39 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
            else if(password.isEmpty()){
                JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
            }
-           else if(password.equals(pass) && username.equals(user)){
-           JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
-           Homepage home = new Homepage();
-           home.setVisible(true);
-           this.dispose();
-           } else {
-               JOptionPane.showMessageDialog(this, "Login Denied", "Error", JOptionPane.ERROR_MESSAGE);
-           }
-       }
+           else{ 
+               String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+               try{
+                   Connection con = DBConnection.getConnection();
+                   
+                   PreparedStatement pet = con.prepareStatement(sql);
+                   
+                   pet.setString(1, username);
+                   pet.setString(2, password);
+                   
+                   ResultSet res = pet.executeQuery();
+                   
+                   if(res.next()){
+                       JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
+                       Homepage home = new Homepage();
+                       home.setVisible(true);
+                       this.dispose();
+                   }
+                   else{
+                     JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                   }
+                   
+                   res.close();
+                   pet.close();
+                   con.close();
+                       
+               }catch(SQLException ex){
+                 JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+                 
+                 ex.printStackTrace();
+           }   
+        }
+    }
        else if(e.getSource() == btnregister){
            register reg = new register();
            reg.setVisible(true);
