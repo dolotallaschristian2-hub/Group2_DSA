@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class fooddeliveryGUI extends JFrame implements ActionListener {
     
@@ -26,50 +27,53 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
        
+        panel = new JPanel();
+        panel.setBounds(30, 100, 520, 500);
+        panel.setBackground(Color.gray);
+        panel.setLayout(null);
+        add(panel);
         
         //Setting of a Label Login Page
         lblheader = new JLabel ("Online Food Delivery System",SwingConstants.CENTER);
-        lblheader.setBounds(190, 25, 175, 200);
-        add(lblheader);
+        lblheader.setBounds(190, 25, 175, 50);
+        panel.add(lblheader);
         
         
+        //Labels
         username = new JLabel ("Username: ");
-        username.setBounds(180, 120, 90, 130);
-        add(username);
+        username.setBounds(180, 120, 90, 30);
+        panel.add(username);
         
         
         password = new JLabel ("Password: ");
-        password.setBounds(180, 160, 90, 130);
-        add(password);
+        password.setBounds(180, 160, 90, 30);
+        panel.add(password);
         
         remind = new JLabel ("Do You Have Account?");
-        remind.setBounds(215, 330, 140, 130);
-        add(remind);
+        remind.setBounds(215, 330, 140, 30);
+        panel.add(remind);
         
-        
+        //Text and Password
         txauser = new JTextArea();
-        txauser.setBounds(250, 175, 130, 20);
-        add(txauser);
+        txauser.setBounds(250, 125, 130, 20);
+        panel.add(txauser);
         
         jpfpass = new JPasswordField();
-        jpfpass.setBounds(250, 215, 130, 20);
-        add(jpfpass);
+        jpfpass.setBounds(250, 165, 130, 20);
+        panel.add(jpfpass);
         
         //Setting of Buttons
         btnlogin = new JButton("Login");
         btnlogin.setBounds(230, 250, 100, 40);
         btnlogin.setBackground(new Color(70, 160, 90));
-        add(btnlogin);
+        panel.add(btnlogin);
         
         btnregister = new JButton("Register");
         btnregister.setBounds(230, 420, 100, 40);
         btnregister.setBackground(new Color(150, 70, 80));
-        add(btnregister);
+        panel.add(btnregister);
         
-        panel = new JPanel();
-        panel.setBounds(30, 100, 520, 370);
-        panel.setBackground(Color.gray);
-        add(panel);
+        
         
         
        btnlogin.addActionListener(this);
@@ -81,7 +85,8 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
        if(e.getSource() == btnlogin){
          
            String username = txauser.getText().trim();
-           String password = new String(jpfpass.getPassword());
+           String password = new String (jpfpass.getPassword());
+       
            
            if(username.isEmpty()){
                JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
@@ -90,22 +95,29 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
            }
            else{ 
-               String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+               String sql = "SELECT * FROM users WHERE username = ?";
                try{
                    Connection con = DBConnection.getConnection();
                    
                    PreparedStatement pet = con.prepareStatement(sql);
                    
                    pet.setString(1, username);
-                   pet.setString(2, password);
-                   
                    ResultSet res = pet.executeQuery();
                    
                    if(res.next()){
-                       JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
-                       Homepage home = new Homepage();
-                       home.setVisible(true);
-                       this.dispose();
+                       String hash = res.getString("password");
+                       
+                       if(hash != null && (hash.startsWith("$2a$")|| hash.startsWith("$2b$")|| hash.startsWith("$2y$"))){
+                           if (BCrypt.checkpw(password, hash)){
+                           JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
+                           }  
+                           Homepage home = new Homepage();
+                           home.setVisible(true);
+                           this.dispose();
+                       }else{
+                           JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                       }    
+                        
                    }
                    else{
                      JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class register extends JFrame implements ActionListener{
     private JLabel username, password, again;
@@ -75,19 +76,23 @@ public class register extends JFrame implements ActionListener{
             String agains = new String (confirm.getPassword());
             
             if (username.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Please Enter Username", "Error", JOptionPane.ERROR_MESSAGE);      
-            }else if(word.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Please Enter Username", "Error", JOptionPane.ERROR_MESSAGE); 
+                return;
+            }
+            else if(word.isEmpty()){
                 JOptionPane.showMessageDialog(this, "Plase enter password", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }else if (!word.equals(agains)){
                 JOptionPane.showMessageDialog(this, "Plase check your password", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
-            } 
+            }   
+                String hashp = BCrypt.hashpw(word, BCrypt.gensalt(10));
                 String sql = "INSERT INTO logindb.users SET username = ?, password =  ?";
                 try(Connection cn = DBConnection.getConnection()){
                    PreparedStatement st = cn.prepareStatement(sql);
                    
                    st.setString(1, username);
-                   st.setString(2, word);
+                   st.setString(2, hashp);
                    
                    int result = st.executeUpdate();
                    System.out.println("Rows Inserted " + result);
