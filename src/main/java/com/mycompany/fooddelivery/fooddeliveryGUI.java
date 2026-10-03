@@ -69,7 +69,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         panel.add(btnlogin);
         
         btnregister = new JButton("Register");
-        btnregister.setBounds(230, 420, 100, 40);
+        btnregister.setBounds(230, 380, 100, 40);
         btnregister.setBackground(new Color(150, 70, 80));
         panel.add(btnregister);
         

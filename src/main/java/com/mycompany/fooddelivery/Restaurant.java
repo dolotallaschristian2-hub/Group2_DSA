@@ -7,5 +7,6 @@ public class Restaurant extends JFrame{
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        setLocationRelativeTo(null);
     }
 }

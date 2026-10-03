@@ -6,8 +6,8 @@ public class FoodDelivery {
 
     public static void main(String[] args) {
        
-        fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
-        fooddelivery.setVisible(true);
+        Choices cs = new Choices();
+        cs.setVisible(true);
         Connection conn = DBConnection.getConnection();
 
     if (conn != null) {
