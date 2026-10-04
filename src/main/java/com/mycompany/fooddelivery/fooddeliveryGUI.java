@@ -12,7 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class fooddeliveryGUI extends JFrame implements ActionListener {
     
     private JLabel lblheader, username, password, remind;
-    private JButton btnlogin, btnregister;
+    private JButton btnlogin, btnregister, back, fpass;
     private JTextArea txauser;
     private JPasswordField jpfpass;
     private JScrollPane error;
@@ -28,7 +28,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
        
         panel = new JPanel();
-        panel.setBounds(30, 100, 520, 500);
+        panel.setBounds(30, 80, 520, 500);
         panel.setBackground(Color.gray);
         panel.setLayout(null);
         add(panel);
@@ -69,15 +69,24 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         panel.add(btnlogin);
         
         btnregister = new JButton("Register");
-        btnregister.setBounds(230, 380, 100, 40);
+        btnregister.setBounds(230, 360, 100, 40);
         btnregister.setBackground(new Color(150, 70, 80));
         panel.add(btnregister);
         
+        fpass = new JButton("Forget Password");
+        fpass.setBounds(200, 420, 140, 30);
+        panel.add(fpass);
+        
+        back = new JButton("<-----");
+        back.setBounds(20, 10, 80, 40);
+        add(back);
         
         
         
        btnlogin.addActionListener(this);
-       btnregister.addActionListener(this);        
+       btnregister.addActionListener(this); 
+       back.addActionListener(this);
+       fpass.addActionListener(this);
     }
 
     @Override
@@ -138,6 +147,16 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
            register reg = new register();
            reg.setVisible(true);
            this.dispose();
+       }
+       else if (e.getSource() == back){
+            Choices cs = new Choices();
+            cs.setVisible(true);
+            this.dispose();
+        }
+       else if (e.getSource() == fpass){
+            forgetPass fp = new forgetPass();
+            fp.setVisible(true);
+            this.dispose();
        }
     }
 }

@@ -8,7 +8,7 @@ public class Choices extends JFrame implements ActionListener{
     
     private JPanel pane;
     private JLabel label;
-    private JButton resto, custo;
+    private JButton resto, custo, back;
     
     Choices(){
         setSize(500, 500);
@@ -19,7 +19,7 @@ public class Choices extends JFrame implements ActionListener{
         setResizable(false);
         
         pane = new JPanel();
-        pane.setBounds(120, 150, 300, 300);
+        pane.setBounds(100, 100, 300, 300);
         pane.setLayout(null);
         add(pane);
         
@@ -34,9 +34,12 @@ public class Choices extends JFrame implements ActionListener{
         custo = new JButton("Customer");
         custo.setBounds(70, 150, 160, 50);
         pane.add(custo);
+       
+        
         
         resto.addActionListener(this);
         custo.addActionListener(this);
+        
     }
 
     @Override
@@ -44,10 +47,12 @@ public class Choices extends JFrame implements ActionListener{
         if(e.getSource() == resto){
             Restaurant rm = new Restaurant();
             rm.setVisible(true);
+            this.dispose();
         }
         else if(e.getSource() == custo){
             fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
             fooddelivery.setVisible(true);
+            this.dispose();
         }
     }
         
