@@ -14,7 +14,7 @@ public class forgetPass extends JFrame implements ActionListener {
     private JLabel label, usir, paswurd;
     private JTextField user;
     private JPasswordField pass;
-    private JButton upd;
+    private JButton upd, back;
     private JPanel panel;
     
     forgetPass(){
@@ -54,7 +54,12 @@ public class forgetPass extends JFrame implements ActionListener {
         upd.setBounds(140, 170, 140, 40);
         panel.add(upd);
         
+        back = new JButton ("<----");
+        back.setBounds(20, 10, 80, 40);
+        add(back);
+        
         upd.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
@@ -108,8 +113,12 @@ public class forgetPass extends JFrame implements ActionListener {
             }catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Database has an error" + ex, "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
-            }
-            
+            }  
+        }
+        else if(e.getSource() == back){
+            fooddeliveryGUI fd = new fooddeliveryGUI();
+            fd.setVisible(true);
+            this.dispose();
         }
     }
     

@@ -13,7 +13,7 @@ public class register extends JFrame implements ActionListener{
     private JLabel username, password, again;
     private JTextField user;
     private JPasswordField pass, confirm;
-    private JButton create;
+    private JButton create, back;
     private JPanel panel;
             
     
@@ -65,7 +65,12 @@ public class register extends JFrame implements ActionListener{
         create.setBounds(100, 170, 160, 45);
         panel.add(create);
         
-       create.addActionListener(this);
+        back = new JButton("<----");
+        back.setBounds(20, 10, 80, 40);
+        add(back);
+        
+        create.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
@@ -110,6 +115,11 @@ public class register extends JFrame implements ActionListener{
                 }
                 
             }
+        else if(e.getSource() == back){
+            fooddeliveryGUI fd = new fooddeliveryGUI();
+            fd.setVisible(true);
+            this.dispose();
+        }
         }
     }
 
