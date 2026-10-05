@@ -50,63 +50,6 @@ public class Order extends JFrame implements ActionListener {
     private String selectedAddress;
 
     public Order() {
-    // Initialize Data
-    menuModel = new DefaultListModel<>();
-    orderModel = new DefaultListModel<>();
-
-    menuList = new LinkedList<>();
-    menuPriceList = new LinkedList<>();
-
-    orderItems = new LinkedList<>();
-    orderPrices = new LinkedList<>();
-
-    suggestionList = new LinkedList<>();
-
-    // 0rder Windoow
-    setTitle("Online Food Delivery - Order");
-    setSize(700, 650);
-    setLayout(null);
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    setResizable(false);
-
-    // Restaurant Label
-    JLabel lblSelect = new JLabel("Select Restaurant:");
-    lblSelect.setBounds(20, 15, 150, 25);
-    add(lblSelect);
-
-    // Menu
-    JLabel lblMenu = new JLabel("Menu:");
-    lblMenu.setBounds(20, 150, 100, 25);
-    add(lblMenu);
-
-    menu = new JList<>(menuModel);
-    menuScrollPane = new JScrollPane(menu);
-    menuScrollPane.setBounds(20, 180, 300, 170);
-    add(menuScrollPane);
-
-    // Order
-    JLabel lblOrder = new JLabel("Your Order:");
-    lblOrder.setBounds(350, 150, 150, 25);
-    add(lblOrder);
-
-    order = new JList<>(orderModel);
-    orderScrollPane = new JScrollPane(order);
-    orderScrollPane.setBounds(350, 180, 300, 170);
-    add(orderScrollPane);
-
-    // Restaurant Information
-    lblRestaurant = new JLabel("Restaurant: ");
-    lblRestaurant.setBounds(20, 90, 400, 25);
-    add(lblRestaurant);
-
-    lblAddress = new JLabel("Address: ");
-    lblAddress.setBounds(20, 115, 600, 25);
-    add(lblAddress);
-
-    // Total
-    lblTotal = new JLabel("Total: ₱0.00");
-    lblTotal.setBounds(350, 365, 250, 35);
-    add(lblTotal);
     }
 
     @Override
