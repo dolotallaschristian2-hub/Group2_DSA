@@ -134,6 +134,18 @@ public class Order extends JFrame implements ActionListener {
     lblTotal.setBounds(350, 365, 250, 35);
     add(lblTotal);
 
+    // Suggestion
+    JLabel lblSuggest = new JLabel("Food Suggestion:");
+    lblSuggest.setBounds(20, 425, 150, 25);
+    add(lblSuggest);
+
+    txtSuggestion = new JTextField();
+    txtSuggestion.setBounds(20, 455, 430, 35);
+    add(txtSuggestion);
+
+    btnSuggestion = new JButton("Submit");
+    btnSuggestion.setBounds(470, 455, 120, 35);
+    add(btnSuggestion);
 
     // ActionListeners
     btnMcDo.addActionListener(this);
@@ -141,7 +153,9 @@ public class Order extends JFrame implements ActionListener {
     btnMangInasal.addActionListener(this);
     btnChowking.addActionListener(this);
 
-   
+    btnAdd.addActionListener(this);
+    btnRemove.addActionListener(this);
+    btnSuggestion.addActionListener(this);
     }
 
     @Override
@@ -225,24 +239,115 @@ public class Order extends JFrame implements ActionListener {
             },
             new double[]{99, 99, 55, 75, 99}
         );
+    // Add        
+    }else if (e.getSource() == btnAdd) {
+
+            int indexSelected = menu.getSelectedIndex();
+
+            if (indexSelected != -1) {
+
+                String item = menuList.get(indexSelected);
+                double price = menuPriceList.get(indexSelected);
+
+                orderItems.add(item);
+                orderPrices.add(price);
+
+                orderModel.addElement(item);
+
+                updateTotal();
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Please select a menu item first",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+        // Remove
+        } else if (e.getSource() == btnRemove) {
+
+            int indexSelected = order.getSelectedIndex();
+
+            if (indexSelected != -1) {
+
+                orderItems.remove(indexSelected);
+                orderPrices.remove(indexSelected);
+
+                orderModel.removeElementAt(indexSelected);
+
+                updateTotal();
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Please select an order item first",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+        // Suggestion
+        } else if (e.getSource() == btnSuggestion) {
+
+            String suggestion = txtSuggestion.getText();
+
+            if (!suggestion.isEmpty()) {
+
+                suggestionList.add(suggestion);
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Suggestion submitted!",
+                    "Thank You",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+
+                txtSuggestion.setText("");
+
+            } else {
+
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Please enter a suggestion first",
+                    "Input Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
     }
 
-}   
-    //Restaurant Menu
-
+    // Load restaurant menu
     private void loadMenu(String[] items, double[] prices) {
 
-    menuModel.clear();
-    menuList.clear();
-    menuPriceList.clear();
+        menuModel.clear();
+        menuList.clear();
+        menuPriceList.clear();
 
-    for (int i = 0; i < items.length; i++) {
+        for (int i = 0; i < items.length; i++) {
 
-        menuList.add(items[i]);
-        menuPriceList.add(prices[i]);
+            menuList.add(items[i]);
+            menuPriceList.add(prices[i]);
 
-        menuModel.addElement(items[i]);
+            menuModel.addElement(items[i]);
+        }
     }
-}
 
+    // Automatically calculate total price
+    private void updateTotal() {
+
+        double total = 0;
+
+        for (double price : orderPrices) {
+
+            total = total + price;
+        }
+
+        lblTotal.setText(
+            String.format("Total: ₱%.2f", total)
+        );
+    }
 }
