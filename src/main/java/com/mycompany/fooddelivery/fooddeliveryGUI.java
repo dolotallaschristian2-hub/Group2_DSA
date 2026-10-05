@@ -104,7 +104,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
            }
            else{ 
-               String sql = "SELECT * FROM users WHERE username = ?";
+               String sql = "SELECT * FROM users WHERE BINARY username = ?";
                try{
                    Connection con = DBConnection.getConnection();
                    
@@ -117,16 +117,17 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                        String hash = res.getString("password");
                        
                        if(hash != null && (hash.startsWith("$2a$")|| hash.startsWith("$2b$")|| hash.startsWith("$2y$"))){
+                           
                            if (BCrypt.checkpw(password, hash)){
                            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
-                           }  
+                           
                            Homepage home = new Homepage();
                            home.setVisible(true);
                            this.dispose();
-                       }else{
+                           }
+                        }else{
                            JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                       }    
-                        
+                       }      
                    }
                    else{
                      JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
