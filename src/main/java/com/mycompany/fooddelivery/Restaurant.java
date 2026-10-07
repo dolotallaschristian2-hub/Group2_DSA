@@ -10,10 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-/**
- *
- * @author Ottofel
- */
 public class Restaurant extends JFrame {
     
     private JLabel idLabel, nameLabel, addressLabel, orderLabel ;
