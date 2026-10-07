@@ -2,11 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package com.mycompany.fooddelivery;
 
 /**
  *
  * @author Ottofel
  */
-class JTextField {
-    
+public class RestaurantMain {
+    public static void main(String[] args) {
+       
+        Restaurant app = new Restaurant ();
+        app.setVisible (true);
+    }
 }
