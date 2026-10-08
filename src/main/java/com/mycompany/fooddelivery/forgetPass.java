@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 public class forgetPass extends JFrame implements ActionListener {
     
@@ -86,7 +86,7 @@ public class forgetPass extends JFrame implements ActionListener {
                 ResultSet outcome = search.executeQuery();
                 
                 if(outcome.next()){
-                    String hash = BCrypt.hashpw(word, BCrypt.gensalt(12));
+                    String hash = encryption.hash(word);
                     
                 String update = "UPDATE users SET password = ? WHERE username = ?";
                 
@@ -113,6 +113,8 @@ public class forgetPass extends JFrame implements ActionListener {
             }catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Database has an error" + ex, "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Encryption has an error" + ex, "Error", JOptionPane.ERROR_MESSAGE);
             }  
         }
         else if(e.getSource() == back){

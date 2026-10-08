@@ -114,7 +114,7 @@ public class register extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Encryption has an Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         else if(e.getSource() == back){
