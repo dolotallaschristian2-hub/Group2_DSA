@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 public class fooddeliveryGUI extends JFrame implements ActionListener {
     
@@ -116,22 +116,31 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                    if(res.next()){
                        String hash = res.getString("password");
                        
-                       if(hash != null && (hash.startsWith("$2a$")|| hash.startsWith("$2b$")|| hash.startsWith("$2y$"))){
+                       if(hash != null){
                            
-                           if (BCrypt.checkpw(password, hash)){
+                          try{ 
+                           if (encryption.Password(password, hash)){
                            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
                            
                            Homepage home = new Homepage();
                            home.setVisible(true);
                            this.dispose();
                            }
-                        }else{
-                           JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                       }      
+                           else{
+                               JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE
+            );
+                           }
+                        }catch(Exception ex){
+                             JOptionPane.showMessageDialog(this, "Password verification error: " + ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
+                             
+                        }  
                    }
                    else{
                      JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
                    }
+                   }
+                           
+                                  
                    
                    res.close();
                    pet.close();

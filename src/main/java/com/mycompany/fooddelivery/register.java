@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 public class register extends JFrame implements ActionListener{
     private JLabel username, password, again;
@@ -91,7 +91,8 @@ public class register extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(this, "Plase check your password", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }   
-                String hashp = BCrypt.hashpw(word, BCrypt.gensalt(10));
+            try{
+                String hashp = encryption.hash(word);
                 String sql = "INSERT INTO logindb.users SET username = ?, password =  ?";
                 try(Connection cn = DBConnection.getConnection()){
                    PreparedStatement st = cn.prepareStatement(sql);
@@ -108,13 +109,14 @@ public class register extends JFrame implements ActionListener{
                 fooddelivery.setVisible (true);
                 this.dispose();
                 
-                
+                }
                 }catch (SQLException ex){
                     JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
-                }
-                
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }
         else if(e.getSource() == back){
             fooddeliveryGUI fd = new fooddeliveryGUI();
             fd.setVisible(true);
