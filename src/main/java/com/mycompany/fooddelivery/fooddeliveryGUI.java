@@ -92,19 +92,23 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == btnlogin){
-         
+//         Actions for the user if they login with the account they created
            String username = txauser.getText().trim();
            String password = new String (jpfpass.getPassword());
        
            
            if(username.isEmpty()){
+//               This error would show if the user did not enter there username
                JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
            }
            else if(password.isEmpty()){
+//               This error would show if the user did not enter the password after they enter the username
                JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
            }
            else{ 
+//               This would show if the user enter both username and password
                String sql = "SELECT * FROM users WHERE BINARY username = ?";
+//             Username case sensitive query to the database
                try{
                    Connection con = DBConnection.getConnection();
                    
@@ -113,12 +117,14 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                    pet.setString(1, username);
                    ResultSet res = pet.executeQuery();
                    
+//                   Hashing the personal password of the user 
                    if(res.next()){
                        String hash = res.getString("password");
                        
                        if(hash != null){
                            
                           try{ 
+//                              If both username and password correct
                            if (encryption.Password(password, hash)){
                            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
                            
@@ -126,22 +132,22 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                            home.setVisible(true);
                            this.dispose();
                            }
+//                           Error handling
                            else{
-                               JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE
-            );
+                               JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
                            }
+//                           Encryption Error Handling 
                         }catch(Exception ex){
                              JOptionPane.showMessageDialog(this, "Password verification error: " + ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
                              
                         }  
                    }
+//                       If neither the username and password incorrect
                    else{
                      JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
                    }
                    }
-                           
-                                  
-                   
+                            
                    res.close();
                    pet.close();
                    con.close();
@@ -154,16 +160,19 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         }
     }
        else if(e.getSource() == btnregister){
+//           Goes to the register class
            register reg = new register();
            reg.setVisible(true);
            this.dispose();
        }
        else if (e.getSource() == back){
+//           Goes to the choices class
             Choices cs = new Choices();
             cs.setVisible(true);
             this.dispose();
         }
        else if (e.getSource() == fpass){
+//           Goes to the forgetPass class
             forgetPass fp = new forgetPass();
             fp.setVisible(true);
             this.dispose();

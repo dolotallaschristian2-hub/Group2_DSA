@@ -76,7 +76,8 @@ public class register extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == create){
-            String username = new String (user.getText());
+            
+            String username =user.getText().trim();
             String word = new String (pass.getPassword());
             String agains = new String (confirm.getPassword());
             
