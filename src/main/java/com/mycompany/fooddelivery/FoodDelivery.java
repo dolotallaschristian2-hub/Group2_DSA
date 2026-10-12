@@ -8,9 +8,10 @@ public class FoodDelivery {
        
         Choices cs = new Choices();
         cs.setVisible(true);
-        Connection conn = DBConnection.getConnection();
+        Connection c = DBConnection.getConnection();
 
-    if (conn != null) {
+//    Checking if the database is working
+        if (c != null) {
         System.out.println("SUCCESS: Java is connected to MySQL!");
     }
         

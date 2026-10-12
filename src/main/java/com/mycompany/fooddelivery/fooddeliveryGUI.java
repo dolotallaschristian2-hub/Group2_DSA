@@ -91,74 +91,75 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       if(e.getSource() == btnlogin){
-//         Actions for the user if they login with the account they created
-           String username = txauser.getText().trim();
-           String password = new String (jpfpass.getPassword());
-       
-           
-           if(username.isEmpty()){
-//               This error would show if the user did not enter there username
-               JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
-           }
-           else if(password.isEmpty()){
-//               This error would show if the user did not enter the password after they enter the username
-               JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
-           }
-           else{ 
-//               This would show if the user enter both username and password
-               String sql = "SELECT * FROM users WHERE BINARY username = ?";
-//             Username case sensitive query to the database
-               try{
-                   Connection con = DBConnection.getConnection();
-                   
-                   PreparedStatement pet = con.prepareStatement(sql);
-                   
-                   pet.setString(1, username);
-                   ResultSet res = pet.executeQuery();
-                   
-//                   Hashing the personal password of the user 
-                   if(res.next()){
-                       String hash = res.getString("password");
-                       
-                       if(hash != null){
-                           
-                          try{ 
-//                              If both username and password correct
-                           if (encryption.Password(password, hash)){
-                           JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
-                           
-                           Homepage home = new Homepage();
-                           home.setVisible(true);
-                           this.dispose();
-                           }
-//                           Error handling
-                           else{
-                               JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                           }
-//                           Encryption Error Handling 
-                        }catch(Exception ex){
-                             JOptionPane.showMessageDialog(this, "Password verification error: " + ex.getMessage(), "Error",JOptionPane.ERROR_MESSAGE);
-                             
-                        }  
-                   }
-//                       If neither the username and password incorrect
-                   else{
-                     JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                   }
-                   }
-                            
-                   res.close();
-                   pet.close();
-                   con.close();
-                       
-               }catch(SQLException ex){
-                 JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
-                 
-                 ex.printStackTrace();
-           }   
+        if (e.getSource() == btnlogin) {
+
+    String username = txauser.getText().trim();
+    String password = new String(jpfpass.getPassword());
+
+            if (username.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else {
+                String sql = "SELECT * FROM users WHERE BINARY username = ?";
+
+                try {
+                    Connection con = DBConnection.getConnection();
+                    PreparedStatement pet = con.prepareStatement(sql);
+
+                    pet.setString(1, username);
+
+                    ResultSet res = pet.executeQuery();
+
+            // Check whether the username exists
+                if (res.next()) {
+                    String hash = res.getString("password");
+
+                    if (hash != null && !hash.isEmpty()) {
+
+                    try {
+                        // Verify the password
+                        if (encryption.Password(password, hash)) {
+                            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
+
+                            Homepage home = new Homepage();
+                            home.setVisible(true);
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Password verification error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
+
+                    } else {
+
+                    JOptionPane.showMessageDialog(
+                        this, "Invalid Username or Password",
+                        "Error", JOptionPane.ERROR_MESSAGE
+                    );
+                    }
+
+                } else {
+                // IMPORTANT: Username was not found in the database
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            res.close();
+            pet.close();
+            con.close();
+
+                }catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
         }
-    }
+
        else if(e.getSource() == btnregister){
 //           Goes to the register class
            register reg = new register();
