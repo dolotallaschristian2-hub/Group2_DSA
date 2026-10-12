@@ -21,7 +21,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     
     fooddeliveryGUI(){
         setSize(600, 700);
-        setTitle("Food Delivery");
+        setTitle("Bai N Eat");
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);

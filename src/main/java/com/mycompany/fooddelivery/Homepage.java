@@ -5,39 +5,54 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+//mport static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 
 
 public class Homepage extends JFrame implements ActionListener  {
     
     private LinkedList<String> menuData = new LinkedList<>();
-    private JLabel lblDashboard, lblWelcome;
+    private JLabel lblDashboard, bannerTitle;
     private JMenuBar menuBar;
     private JMenu accountMenu;
     private JMenuItem profileItem,settingsItem,logoutItem;  
     private String loggedInUser;
-    private JPanel sidebar;
-    private JButton home, browse, orders;
+    private JPanel sidebar, main, banner;
+    private JButton home, browse, orders, settings, logout, mcdo, jollibee, manginasal, chowking;
+    private JTextField search;
     
     public Homepage(){
         setSize(600, 600);
-        setTitle("Food Deliver");
+        setTitle("Bai N Eat");
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
         
         Color background = new Color(245,245,245);
-        Color red = new Color(200, 35,35);
+        Color red = new Color(200, 35, 35);
         //initialize menubar and menu
-        
+//      Panels
         JPanel sidebar = new JPanel();
-        sidebar.setBounds(0, 0, 150, 450);
+        sidebar.setBounds(0, 0, 150, 550);
         sidebar.setLayout(null);
-        sidebar.setBackground(red);
+        sidebar.setBackground(new Color(35, 35, 35));
         add(sidebar);
         
+       
+        JPanel main = new JPanel();
+        main.setLayout(null);
+        main.setBounds(150, 0, 450, 550);
+        main.setBackground(background);
+        add(main);
+        
+        JPanel banner = new JPanel();
+        banner.setLayout(null);
+        banner.setBounds(20, 110, 400, 150);
+        banner.setBackground(red);
+        main.add(banner);
+        
+//        Buttons
         JButton home = new JButton("Home");
         home.setBounds(25, 30, 90, 40);
         sidebar.add(home);
@@ -50,60 +65,62 @@ public class Homepage extends JFrame implements ActionListener  {
         orders.setBounds(25, 190, 90, 40);
         sidebar.add(orders);
         
-        menuBar = new JMenuBar();
-        accountMenu = new JMenu("Menu");
+        JButton setting = new JButton("Settings");
+        setting.setBounds(25, 270, 90, 40);
+        sidebar.add(setting);
         
-        profileItem = new JMenuItem("profile");
-        profileItem.setFont(new Font("Arial", Font.PLAIN, 18 ));
-        accountMenu.add(profileItem);
+        JButton logout = new JButton("Logout");
+        logout.setBounds(25, 350, 90, 40);
+        sidebar.add(logout);
         
-        settingsItem = new JMenuItem("settings");
-        settingsItem.setFont(new Font("Arial", Font.PLAIN, 18 ));
-        accountMenu.add(settingsItem);
+        JButton mcdo = new JButton("Mcdonalds");
+        mcdo.setBounds(25, 65, 100, 30);
+        banner.add(mcdo);
         
-        logoutItem = new JMenuItem("logout");
-        logoutItem.setFont(new Font("Arial", Font.PLAIN, 18 ));
-        accountMenu.add(logoutItem);
+        JButton jollibee = new JButton("Jollibee");
+        jollibee.setBounds(25, 110, 100, 30);
+        banner.add(jollibee);
         
+        JButton manginasal = new JButton("Mang Inasal");
+        manginasal.setBounds(205, 65, 110, 30);
+        banner.add(manginasal);
         
-        menuBar.add(Box.createHorizontalGlue());
-        menuBar.add(accountMenu);
-        setJMenuBar(menuBar);
-     
-        //gui's
+        JButton chowking = new JButton("Chowking");
+        chowking.setBounds(205, 110, 100, 30);
+        banner.add(chowking);
+        
+        JTextField search = new JTextField();
+        search.setBounds(200, 15, 200, 30);
+        search.setText("Search food or restaurant");
+        main.add(search);
+        
+//      Labels
+
         lblDashboard = new JLabel("Food Deliver");
-        lblDashboard.setBounds(180, 30, 400, 40);
+        lblDashboard.setBounds(30, 15, 400, 40);
         lblDashboard.setFont(new Font("Arial", Font.BOLD, 25));
-        add(lblDashboard);
+        main.add(lblDashboard);
         
-        lblWelcome = new JLabel("Welcome " + loggedInUser);
-        lblWelcome.setBounds(30,80,400,30);
-        lblWelcome.setFont(new Font("Arial", Font.PLAIN, 16));
-        add(lblWelcome);
-        
-        profileItem.addActionListener(this);
-        settingsItem.addActionListener(this);
-        logoutItem.addActionListener(this);
+        JLabel bannerTitle = new JLabel("Delicious food right at your door");
+        bannerTitle.setBounds(25, 20, 400, 30);
+        bannerTitle.setFont(new Font("Arial", Font.BOLD, 18));
+        bannerTitle.setForeground(Color.WHITE);
+        banner.add(bannerTitle);
+       
         home.addActionListener(this);
         browse.addActionListener(this);
-//        orders.addActionListener(this);
-           
+        orders.addActionListener(this);
+        setting.addActionListener(this);
+        logout.addActionListener(this);
+        mcdo.addActionListener(this);
+//        jollibee.addActionListener(this);
+//        manginasal.addActionListener(this);
+//        chowking.addActionListener(this);
+//           
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == profileItem){
-            JOptionPane.showMessageDialog(this, "User Profile: ","profile",JOptionPane.INFORMATION_MESSAGE);
-        }else if(e.getSource() == settingsItem){
-            JOptionPane.showMessageDialog(this, "Settings coming soon???","settings", JOptionPane.INFORMATION_MESSAGE);
-        }else if(e.getSource() == logoutItem){
-            int choice = JOptionPane.showConfirmDialog(this, "Do you want to close?","Logout", JOptionPane.YES_NO_OPTION);
-           
-           if(choice == JOptionPane.YES_OPTION){
-               fooddeliveryGUI lg = new fooddeliveryGUI();
-               lg.setVisible(true);
-               this.dispose();
-           }
-        }
+//       
             }    
 }
