@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.LinkedList;
-//mport static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 
 
 
@@ -53,43 +53,43 @@ public class Homepage extends JFrame implements ActionListener  {
         main.add(banner);
         
 //        Buttons
-        JButton home = new JButton("Home");
+        home = new JButton("Home");
         home.setBounds(25, 30, 90, 40);
         sidebar.add(home);
         
-        JButton browse = new JButton("Browse");
+        browse = new JButton("Browse");
         browse.setBounds(25, 110, 90, 40);
         sidebar.add(browse);
         
-        JButton orders = new JButton("Orders");
+        orders = new JButton("Orders");
         orders.setBounds(25, 190, 90, 40);
         sidebar.add(orders);
         
-        JButton setting = new JButton("Settings");
-        setting.setBounds(25, 270, 90, 40);
-        sidebar.add(setting);
+        settings = new JButton("Settings");
+        settings.setBounds(25, 270, 90, 40);
+        sidebar.add(settings);
         
-        JButton logout = new JButton("Logout");
+        logout = new JButton("Logout");
         logout.setBounds(25, 350, 90, 40);
         sidebar.add(logout);
         
-        JButton mcdo = new JButton("Mcdonalds");
+        mcdo = new JButton("Mcdonalds");
         mcdo.setBounds(25, 65, 100, 30);
         banner.add(mcdo);
         
-        JButton jollibee = new JButton("Jollibee");
+        jollibee = new JButton("Jollibee");
         jollibee.setBounds(25, 110, 100, 30);
         banner.add(jollibee);
         
-        JButton manginasal = new JButton("Mang Inasal");
+        manginasal = new JButton("Mang Inasal");
         manginasal.setBounds(205, 65, 110, 30);
         banner.add(manginasal);
         
-        JButton chowking = new JButton("Chowking");
+        chowking = new JButton("Chowking");
         chowking.setBounds(205, 110, 100, 30);
         banner.add(chowking);
         
-        JTextField search = new JTextField();
+        search = new JTextField();
         search.setBounds(200, 15, 200, 30);
         search.setText("Search food or restaurant");
         main.add(search);
@@ -110,17 +110,43 @@ public class Homepage extends JFrame implements ActionListener  {
         home.addActionListener(this);
         browse.addActionListener(this);
         orders.addActionListener(this);
-        setting.addActionListener(this);
+        settings.addActionListener(this);
         logout.addActionListener(this);
         mcdo.addActionListener(this);
-//        jollibee.addActionListener(this);
-//        manginasal.addActionListener(this);
-//        chowking.addActionListener(this);
-//           
+        jollibee.addActionListener(this);
+        manginasal.addActionListener(this);
+        chowking.addActionListener(this);
+           
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//       
+                if(e.getSource() == home){
+                    Homepage hm = new Homepage();
+                    hm.setVisible(true);
+                    this.dispose();
+                }else if(e.getSource() == browse){
+                    JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }else if(e.getSource()== orders){
+                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }else if(e.getSource()== settings){
+                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }else if(e.getSource() == logout){
+                    fooddeliveryGUI g = new fooddeliveryGUI();
+                    g.setVisible(true);
+                    this.dispose();
+                    
+                }else if(e.getSource() == mcdo){
+                    mcdoCustomer cs = new mcdoCustomer();
+                    cs.setVisible(true);
+                    this.dispose();
+                    
+                }else if(e.getSource() == jollibee){
+                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }else if(e.getSource() == manginasal){
+                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }else if(e.getSource() == chowking){
+                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }
             }    
 }
