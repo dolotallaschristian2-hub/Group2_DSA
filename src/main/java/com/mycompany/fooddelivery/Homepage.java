@@ -132,9 +132,12 @@ public class Homepage extends JFrame implements ActionListener  {
                 }else if(e.getSource()== settings){
                      JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }else if(e.getSource() == logout){
+                   int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to log out?", "Log out", JOptionPane.YES_NO_OPTION);
+                    if(confirm == JOptionPane.YES_OPTION){
                     fooddeliveryGUI g = new fooddeliveryGUI();
                     g.setVisible(true);
                     this.dispose();
+                    }
                     
                 }else if(e.getSource() == mcdo){
                     mcdoCustomer cs = new mcdoCustomer();
