@@ -4,6 +4,8 @@ package com.mycompany.fooddelivery;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import javax.swing.*;
 
 public class Order extends JFrame implements ActionListener {
@@ -11,7 +13,7 @@ public class Order extends JFrame implements ActionListener {
     private DefaultListModel<String> menuModel;
     private DefaultListModel<String> orderModel;
 
-    private LinkedList<String> menuList;
+    private PriorityQueue<String> orderList;
     private LinkedList<Double> menuPriceList;
 
     private LinkedList<String> orderItems;
@@ -43,7 +45,17 @@ public class Order extends JFrame implements ActionListener {
     private String selectedRestaurant;
     private String selectedAddress;
 
-    public Order() {
+    Order() {
+        setSize(600, 600);
+        setLayout(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setTitle("YOur Order");
+        
+       orderList = new PriorityQueue<>();
+       
+        
     }
 
     @Override
