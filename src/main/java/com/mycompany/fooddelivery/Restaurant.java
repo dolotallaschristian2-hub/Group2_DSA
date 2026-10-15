@@ -26,18 +26,18 @@ public class Restaurant extends JFrame implements ActionListener {
         
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBounds(50, 50, 450, 250);
+        panel.setBounds(50, 50, 450, 300);
         add(panel);
         
         label = new JLabel("Restaurant Account",SwingConstants.CENTER);
         label.setBounds(170, 30, 150, 30);
         panel.add(label);
         
-        user = new JLabel("Username");
+        user = new JLabel("Username: ");
         user.setBounds(120, 90, 70, 30);
         panel.add(user);
         
-        pass = new JLabel("Password");
+        pass = new JLabel("Password: ");
         pass.setBounds(120, 150, 70, 30);
         panel.add(pass);
         
@@ -50,11 +50,11 @@ public class Restaurant extends JFrame implements ActionListener {
         panel.add(password);
         
         login = new JButton("Log In");
-        login.setBounds(170, 200, 100, 30);
+        login.setBounds(190, 200, 100, 30);
         panel.add(login);
         
         create = new JButton("Create Account");
-        create.setBounds(170, 250, 100, 30);
+        create.setBounds(170, 250, 140, 30);
         panel.add(create);
         
         back = new JButton("<-----");
@@ -63,6 +63,7 @@ public class Restaurant extends JFrame implements ActionListener {
         
         login.addActionListener(this);
         back.addActionListener(this);
+        create.addActionListener(this);
         
         
         
@@ -74,7 +75,7 @@ public class Restaurant extends JFrame implements ActionListener {
             String user = text.getText().trim();
             String pass = new String (password.getPassword());
                 if(user.isEmpty()){
-                    JOptionPane.showMessageDialog(this, "Please Enter the Restaurant Account", "Error", JOptionPane.ERROR);
+                    JOptionPane.showMessageDialog(this, "Please Enter the Restaurant Account", "Error", JOptionPane.ERROR_MESSAGE);
                 }else if(pass.isEmpty()){
                     JOptionPane.showMessageDialog(this, "Please Input the Password", "Error", JOptionPane.ERROR_MESSAGE);
                 }else {
@@ -126,7 +127,9 @@ public class Restaurant extends JFrame implements ActionListener {
                 this.dispose();
             }
         }else if(e.getSource() == create){
-            
+            restaurant_register r = new restaurant_register();
+            r.setVisible(true);
+            this.dispose();
         }
     
     }
