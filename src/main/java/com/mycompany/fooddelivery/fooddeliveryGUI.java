@@ -15,7 +15,6 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     private JButton btnlogin, btnregister, back, fpass;
     private JTextArea txauser;
     private JPasswordField jpfpass;
-    private JScrollPane error;
     private JPanel panel;
     
     
