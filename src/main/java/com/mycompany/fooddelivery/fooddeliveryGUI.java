@@ -130,17 +130,13 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                             JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
                         }
 
-                    } catch (Exception ex) {
+                        } catch (Exception ex) {
                         JOptionPane.showMessageDialog(this, "Password verification error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         ex.printStackTrace();
                     }
 
                     } else {
-
-                    JOptionPane.showMessageDialog(
-                        this, "Invalid Username or Password",
-                        "Error", JOptionPane.ERROR_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
                     }
 
                 } else {

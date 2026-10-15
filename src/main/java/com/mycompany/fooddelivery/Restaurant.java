@@ -2,6 +2,12 @@ package com.mycompany.fooddelivery;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
+
 public class Restaurant extends JFrame implements ActionListener {
     
     private JLabel label, user, pass;
@@ -47,6 +53,10 @@ public class Restaurant extends JFrame implements ActionListener {
         login.setBounds(170, 200, 100, 30);
         panel.add(login);
         
+        create = new JButton("Create Account");
+        create.setBounds(170, 250, 100, 30);
+        panel.add(create);
+        
         back = new JButton("<-----");
         back.setBounds(20, 10, 80, 30);
         add(back);
@@ -61,14 +71,62 @@ public class Restaurant extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == login){
-            
-        }else if(e.getSource() == back){
+            String user = text.getText().trim();
+            String pass = new String (password.getPassword());
+                if(user.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Please Enter the Restaurant Account", "Error", JOptionPane.ERROR);
+                }else if(pass.isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Please Input the Password", "Error", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    String sql = "SELECT * FROM restaurant_accounts WHERE BINARY username = ?";
+                    try{
+                        Connection c = DBConnection.getConnection();
+                        PreparedStatement pst = c.prepareStatement(sql);
+                        
+                        pst.setString(1, user);
+                        
+                        ResultSet r = pst.executeQuery();
+                        
+                            if(r.next()){
+                                String hash = r.getString("password");
+                                
+                                if(hash != null && !hash.isEmpty()){
+                                        try{
+                                            if(encryption.Password(pass, hash)){
+                                                JOptionPane.showMessageDialog(this, "Login Sucessfully", "Login", JOptionPane.INFORMATION_MESSAGE);
+                                            }else{
+                                                JOptionPane.showMessageDialog(this, "Access Denied", "Error", JOptionPane.ERROR_MESSAGE);
+                                            }
+                                        }catch(Exception ex){
+                                            JOptionPane.showMessageDialog(this, "Password Verification Error" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                }else{
+                                    JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }else{
+                                JOptionPane.showMessageDialog(this, "Invalid User or Password", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        
+                        r.close();
+                        pst.close();
+                        c.close();
+                        
+                        
+                    }catch(SQLException ex){
+                        JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        
+        else if(e.getSource() == back){
             int confirm = JOptionPane.showConfirmDialog(this, "Back?", "Info", JOptionPane.YES_NO_OPTION);
             if(confirm == JOptionPane.YES_OPTION ){
                 Choices g = new Choices();
                 g.setVisible(true);
                 this.dispose();
             }
+        }else if(e.getSource() == create){
+            
         }
     
     }
