@@ -17,8 +17,8 @@ public class Homepage extends JFrame implements ActionListener  {
     private JMenu accountMenu;
     private JMenuItem profileItem,settingsItem,logoutItem;  
     private String loggedInUser;
-    private JPanel sidebar, main, banner;
-    private JButton home, browse, orders, settings, logout, mcdo, jollibee, manginasal, chowking;
+    private JPanel sidebar, main, banner, banner2;
+    private JButton home, browse, orders, profile, settings, logout, mcdo, jollibee, manginasal, chowking;
     private JTextField search;
     
     public Homepage(){
@@ -40,17 +40,22 @@ public class Homepage extends JFrame implements ActionListener  {
         add(sidebar);
         
        
-        JPanel main = new JPanel();
+        main = new JPanel();
         main.setLayout(null);
         main.setBounds(150, 0, 450, 550);
         main.setBackground(background);
         add(main);
         
-        JPanel banner = new JPanel();
+        banner = new JPanel();
         banner.setLayout(null);
         banner.setBounds(20, 110, 400, 150);
         banner.setBackground(red);
         main.add(banner);
+        
+        banner2 = new JPanel();
+        banner2.setBounds(20, 280, 400, 150);
+        banner2.setBackground(Color.BLUE);
+        main.add(banner2);
         
 //        Buttons
         home = new JButton("Home");
@@ -65,12 +70,16 @@ public class Homepage extends JFrame implements ActionListener  {
         orders.setBounds(25, 190, 90, 40);
         sidebar.add(orders);
         
+        profile = new JButton("Profile");
+        profile.setBounds(25, 270, 90, 40);
+        sidebar.add(profile);
+        
         settings = new JButton("Settings");
-        settings.setBounds(25, 270, 90, 40);
+        settings.setBounds(25, 340, 90, 40);
         sidebar.add(settings);
         
         logout = new JButton("Logout");
-        logout.setBounds(25, 350, 90, 40);
+        logout.setBounds(25, 420, 90, 40);
         sidebar.add(logout);
         
         mcdo = new JButton("Mcdonalds");
@@ -110,6 +119,7 @@ public class Homepage extends JFrame implements ActionListener  {
         home.addActionListener(this);
         browse.addActionListener(this);
         orders.addActionListener(this);
+        profile.addActionListener(this);
         settings.addActionListener(this);
         logout.addActionListener(this);
         mcdo.addActionListener(this);
@@ -125,8 +135,12 @@ public class Homepage extends JFrame implements ActionListener  {
                     Homepage hm = new Homepage();
                     hm.setVisible(true);
                     this.dispose();
+                    
                 }else if(e.getSource() == browse){
-                    JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    Browse b = new  Browse();
+                    b.setVisible(true);
+                    this.dispose();
+                    
                 }else if(e.getSource()== orders){
                      JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }else if(e.getSource()== settings){
