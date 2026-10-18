@@ -31,6 +31,9 @@ public class Homepage extends JFrame implements ActionListener  {
         
         Color background = new Color(245,245,245);
         Color red = new Color(200, 35, 35);
+        Color black = new Color(35, 35, 35);
+        Color dirty = new Color(220, 220, 190);
+        
         //initialize menubar and menu
 //      Panels
         sidebar = new JPanel();
@@ -60,26 +63,38 @@ public class Homepage extends JFrame implements ActionListener  {
 //        Buttons
         home = new JButton("Home");
         home.setBounds(25, 30, 90, 40);
+        home.setBackground(black);
+        home.setForeground(dirty);
         sidebar.add(home);
         
         browse = new JButton("Browse");
         browse.setBounds(25, 110, 90, 40);
+        browse.setBackground(black);
+        browse.setForeground(dirty);
         sidebar.add(browse);
         
         orders = new JButton("Orders");
         orders.setBounds(25, 190, 90, 40);
+        orders.setBackground(black);
+        orders.setForeground(dirty);
         sidebar.add(orders);
         
         profile = new JButton("Profile");
         profile.setBounds(25, 270, 90, 40);
+        profile.setBackground(black);
+        profile.setForeground(dirty);
         sidebar.add(profile);
         
         settings = new JButton("Settings");
         settings.setBounds(25, 340, 90, 40);
+        settings.setBackground(black);
+        settings.setForeground(dirty);
         sidebar.add(settings);
         
         logout = new JButton("Logout");
         logout.setBounds(25, 420, 90, 40);
+        logout.setBackground(black);
+        logout.setForeground(dirty);
         sidebar.add(logout);
         
         mcdo = new JButton("Mcdonalds");
@@ -110,7 +125,7 @@ public class Homepage extends JFrame implements ActionListener  {
         lblDashboard.setFont(new Font("Arial", Font.BOLD, 25));
         main.add(lblDashboard);
         
-        JLabel bannerTitle = new JLabel("Delicious food right at your door");
+        bannerTitle = new JLabel("Delicious food right at your door");
         bannerTitle.setBounds(25, 20, 400, 30);
         bannerTitle.setFont(new Font("Arial", Font.BOLD, 18));
         bannerTitle.setForeground(Color.WHITE);
@@ -142,6 +157,8 @@ public class Homepage extends JFrame implements ActionListener  {
                     this.dispose();
                     
                 }else if(e.getSource()== orders){
+                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }else if(e.getSource()== profile){
                      JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }else if(e.getSource()== settings){
                      JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
