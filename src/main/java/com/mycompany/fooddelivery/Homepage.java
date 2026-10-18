@@ -33,7 +33,7 @@ public class Homepage extends JFrame implements ActionListener  {
         Color red = new Color(200, 35, 35);
         //initialize menubar and menu
 //      Panels
-        JPanel sidebar = new JPanel();
+        sidebar = new JPanel();
         sidebar.setBounds(0, 0, 150, 550);
         sidebar.setLayout(null);
         sidebar.setBackground(new Color(35, 35, 35));

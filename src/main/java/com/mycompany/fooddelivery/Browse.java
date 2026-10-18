@@ -8,6 +8,7 @@ public class Browse extends JFrame {
     private JLabel title, MCDO, JOL, MANG, CHOW;
     private JButton mcdo, jol, mang, chow, back;
     private JTextField carttext;
+    private JPanel panel;
 
     private double total = 0;
     
@@ -19,10 +20,18 @@ public class Browse extends JFrame {
         setResizable(false);
         setTitle("Bai N Eat - Browse");
         
+        Color red = new Color(35, 35 ,35);
+        
         title = new JLabel("Browse Food Menu");
         title.setFont(new Font("Arial", Font.BOLD, 25));
         title.setBounds(170, 30, 300, 35);
         add(title);
+        
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBounds(0, 0, 150, 550);
+        panel.setBackground(red);
+        add(panel);
 
     }
 
