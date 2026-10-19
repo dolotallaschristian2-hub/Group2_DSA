@@ -96,10 +96,5 @@ public class MapClass extends JFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-
-        MapClass frame = new MapClass();
-
-        frame.setVisible(true);
-    }
+    
 }

@@ -1,12 +1,14 @@
 package com.mycompany.fooddelivery;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class Browse extends JFrame {
+public class Browse extends JFrame implements ActionListener{
     
-    private JLabel title, MCDO, JOL, MANG, CHOW, infomc, infojol, infomang, infochow, pricemc, pricejol, pricemang, pricechow;
-    private JButton mcdo, jol, mang, chow, back, home, browse,orders, profile, settings,logout;
+    private JLabel title, MCDO, JOL, MANG, infomc, infojol, infomang, pricemc, pricejol, pricemang;
+    private JButton mcdo, jol, mang, home, browse, orders, profile, settings,logout;
     private JTextField carttext;
     private JPanel panel, pan1, pan2, pan3, pan4;
 
@@ -52,8 +54,6 @@ public class Browse extends JFrame {
         pan3.setBackground(dirty);
         add(pan3);
         
-        
-        
         home = new JButton("Home");
         home.setBounds(25, 30, 90, 40);
         home.setBackground(red);
@@ -90,10 +90,6 @@ public class Browse extends JFrame {
         logout.setBackground(red);
         panel.add(logout);
         
-        back = new JButton("<-----");
-        back.setBounds(500, 10, 80, 40);
-        add(back);
-        
         //Mcdo Browse Label and View
         MCDO = new JLabel("McDonald's - Mixed and Match");
         MCDO.setBounds(30, 20, 350, 30);
@@ -114,7 +110,84 @@ public class Browse extends JFrame {
         infomc.setFont(new Font("Sans-Serif", Font.PLAIN, 14));
         pan1.add(infomc);
         
-//      Jollibee    
+//      Jollibee
+        JOL = new JLabel("Jollibee's - Mixed and Match");
+        JOL.setBounds(30, 20, 350, 30);
+        JOL.setFont(new Font("Sans-Serif", Font.PLAIN, 16));
+        pan2.add(JOL);
+        
+        pricejol = new JLabel("₱99");
+        pricejol.setBounds(30, 40, 50, 30);
+        pricejol.setFont(new Font("Sans-Serif", Font.PLAIN, 16));
+        pan2.add(pricejol);
+        
+        jol = new JButton("Add to cart");
+        jol.setBounds(260, 20, 130, 30);
+        pan2.add(jol);
+        
+        infojol = new JLabel("Click ADD TO CART to add the meal");
+        infojol.setBounds(30, 60, 350, 30);
+        infojol.setFont(new Font("Sans-Serif", Font.PLAIN, 14));
+        pan2.add(infojol);
+        
+        
+ //     Manginasal  
+        MANG = new JLabel("Mang inasal's - Pecho Large");
+        MANG.setBounds(30, 20, 350, 30);
+        MANG.setFont(new Font("Sans-Serif", Font.PLAIN, 16));
+        pan3.add(MANG);
+        
+        pricemang = new JLabel("₱169");
+        pricemang.setBounds(30, 40, 50, 30);
+        pricemang.setFont(new Font("Sans-Serif", Font.PLAIN, 16));
+        pan3.add(pricemang);
+        
+        mang = new JButton("Add to cart");
+        mang.setBounds(260, 20, 130, 30);
+        pan3.add(mang);
+        
+        infomang = new JLabel("Click ADD TO CART to add the meal");
+        infomang.setBounds(30, 60, 350, 30);
+        infomang.setFont(new Font("Sans-Serif", Font.PLAIN, 14));
+        pan3.add(infomang);
+        
+        mcdo.addActionListener(this);
+        jol.addActionListener(this);
+        mang.addActionListener(this);
+        home.addActionListener(this);
+        browse.addActionListener(this);
+        settings.addActionListener(this);
+        orders.addActionListener(this);
+        profile.addActionListener(this);
+        logout.addActionListener(this);
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+         if(e.getSource() == home){
+             Homepage h = new Homepage();
+             h.setVisible(true);
+             this.dispose();
+         }else if(e.getSource() == browse){
+             Browse s = new Browse();
+             s.setVisible(true);
+             this.dispose();
+         }else if(e.getSource() == orders){
+             
+         }else if(e.getSource() == settings){
+             
+         }else if(e.getSource() == profile){
+             
+         }else if(e.getSource() == logout){
+             int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+             if(confirm == JOptionPane.YES_OPTION){
+                  fooddeliveryGUI g = new fooddeliveryGUI();
+                    g.setVisible(true);
+                    this.dispose();
+             }
+             
+         }
     }
 
 }
