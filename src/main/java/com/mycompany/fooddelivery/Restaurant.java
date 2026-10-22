@@ -95,6 +95,9 @@ public class Restaurant extends JFrame implements ActionListener {
                                         try{
                                             if(encryption.Password(pass, hash)){
                                                 JOptionPane.showMessageDialog(this, "Login Sucessfully", "Login", JOptionPane.INFORMATION_MESSAGE);
+                                                RestaurantHome h = new RestaurantHome();
+                                                h.setVisible(true);
+                                                this.dispose();
                                             }else{
                                                 JOptionPane.showMessageDialog(this, "Access Denied", "Error", JOptionPane.ERROR_MESSAGE);
                                             }
