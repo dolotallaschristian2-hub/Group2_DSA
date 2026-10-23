@@ -72,6 +72,8 @@ public class menuaddMang extends JFrame implements ActionListener{
         add(back);
         
         save.addActionListener(this);
+        clear.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
@@ -128,6 +130,15 @@ public class menuaddMang extends JFrame implements ActionListener{
                 }catch(SQLException ex){
                     JOptionPane.showMessageDialog(this, "Database has an error", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+        } else if(e.getSource() == clear){
+                resID.setText("");
+                restname.setText("");
+                descrp.setText("");
+                prices.setText("");
+        } else if(e.getSource() == back){
+                mangRestaurant r = new mangRestaurant();
+                r.setVisible(true);
+                this.dispose();
         }
     }
 }

@@ -126,7 +126,17 @@ public class menuAdd extends JFrame implements ActionListener{
                    }catch(SQLException ex){
                        JOptionPane.showMessageDialog(this, "Error Saving Menu" + ex.getMessage(),"Database Error", JOptionPane.ERROR_MESSAGE );
                    }
-            }
+            }   else if(e.getSource() == clear){
+                resID.setText("");
+                restname.setText("");
+                descrp.setText("");
+                prices.setText("");
+                
+            } else if(e.getSource() == back){
+                mangRestaurant r = new mangRestaurant();
+                r.setVisible(true);
+                this.dispose();
+        }
             
     
     }
