@@ -58,6 +58,9 @@ public class RestaurantHome extends JFrame implements ActionListener{
             }else if(e.getSource() == chow){
                 
             }else if(e.getSource() == mang){
+                mangRestaurant m = new mangRestaurant();
+                m.setVisible(true);
+                this.dispose();
                 
             }else if(e.getSource() == jol){
                 jolRestaurant r = new jolRestaurant();
