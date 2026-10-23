@@ -52,7 +52,8 @@ public class jolRestaurant extends JFrame implements ActionListener {
         if (e.getSource() == shows){
             
         }else if(e.getSource() == menuadd){
-            
+            menuaddJol j = new menuaddJol();
+            j.setVisible(true);
         }
     }
 }

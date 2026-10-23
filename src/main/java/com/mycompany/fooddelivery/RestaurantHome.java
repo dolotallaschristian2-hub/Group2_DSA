@@ -60,6 +60,9 @@ public class RestaurantHome extends JFrame implements ActionListener{
             }else if(e.getSource() == mang){
                 
             }else if(e.getSource() == jol){
+                jolRestaurant r = new jolRestaurant();
+                r.setVisible(true);
+                this.dispose();
                 
             }else if(e.getSource() == logout){
                 int confirm = JOptionPane.showConfirmDialog(this, "Log out?", "Logout", JOptionPane.YES_NO_OPTION);
