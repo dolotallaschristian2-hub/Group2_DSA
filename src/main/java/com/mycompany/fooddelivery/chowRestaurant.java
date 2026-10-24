@@ -44,6 +44,7 @@ public class chowRestaurant extends JFrame implements ActionListener {
         add(menuadd);
         
         shows.addActionListener(this);
+        menuadd.addActionListener(this);
     }
 
     @Override
@@ -51,7 +52,9 @@ public class chowRestaurant extends JFrame implements ActionListener {
         if(e.getSource() == shows){
             
         }else if(e.getSource() == menuadd){
-            
+            menuaddChow c = new menuaddChow();
+            c.setVisible(true);
+            this.dispose();
         }
     
     }
