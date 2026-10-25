@@ -70,13 +70,13 @@ public class mcdoCustomer extends JFrame implements ActionListener {
 
     public mcdoCustomer() {
         setTitle("Online Food Delivery System");
-        setSize(600, 600);
+        setSize(700, 800);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        title = new JLabel("ONLINE FOOD DELIVERY");
+        title = new JLabel("ONLINE FOOD DELIVERY", SwingConstants. CENTER);
         title.setBounds(220, 10, 300, 25);
         add(title);
 

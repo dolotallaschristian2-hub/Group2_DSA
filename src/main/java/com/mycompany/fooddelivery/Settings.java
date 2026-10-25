@@ -93,6 +93,9 @@ public class Settings extends JFrame implements ActionListener {
             this.dispose();
             
         }else if(e.getSource() == orders){
+            Order o = new Order();
+            o.setVisible(true);
+            this.dispose();
             
         }else if(e.getSource() == settings){
             Settings s = new Settings();
@@ -100,6 +103,9 @@ public class Settings extends JFrame implements ActionListener {
             this.dispose();
             
         }else if(e.getSource() == profile){
+            profile p = new profile();
+            p.setVisible(true);
+            this.dispose();
             
         }else if(e.getSource() == logout){
             int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to logout?", "Log out", JOptionPane.YES_NO_OPTION);

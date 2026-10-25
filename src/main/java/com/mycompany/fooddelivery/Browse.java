@@ -173,15 +173,22 @@ public class Browse extends JFrame implements ActionListener{
              Browse s = new Browse();
              s.setVisible(true);
              this.dispose();
-         }else if(e.getSource() == orders){
              
+         }else if(e.getSource() == orders){
+            Order o = new Order();
+            o.setVisible(true);
+            this.dispose();
+            
          }else if(e.getSource() == settings){
              Settings s = new Settings();
              s.setVisible(true);
              this.dispose();
                      
          }else if(e.getSource() == profile){
-             
+                profile p = new profile();
+                p.setVisible(true);
+                this.dispose();
+                
          }else if(e.getSource() == logout){
              int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to logout?", "Logout", JOptionPane.YES_NO_OPTION);
              if(confirm == JOptionPane.YES_OPTION){
