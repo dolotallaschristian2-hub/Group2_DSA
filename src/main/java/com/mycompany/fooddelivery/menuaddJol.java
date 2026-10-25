@@ -20,6 +20,8 @@ public class menuaddJol extends JFrame implements ActionListener{
         setResizable(false);
         setLocationRelativeTo(null);
         
+        CreateTable();
+        
         title = new JLabel("Add Menu Item",SwingConstants.CENTER);
         title.setFont(new Font("Arial",Font.BOLD, 14));
         title.setBounds(200, 20, 250, 30);
@@ -135,6 +137,25 @@ public class menuaddJol extends JFrame implements ActionListener{
                 mangRestaurant r = new mangRestaurant();
                 r.setVisible(true);
                 this.dispose();
+        }
+    }
+    
+    public static void CreateTable(){
+        String sql = "CREATE TABLE IF NOT EXISTS menu_jollibee("
+                + "foodID INT NOT NULL,"
+                + "foodName VARCHAR(100) NOT NULL,"
+                + "description VARCHAR(255) NOT NULL"
+                + "prices DECIMALS (10,2) NOT NULL"
+                + "availability VARCHAR (20) DEFAULT 'available');";
+        try{
+            Connection c = DBConnection.getConnection();
+            PreparedStatement p = c.prepareStatement(sql);
+            
+            p.executeUpdate();
+            System.out.println("Table is Ready");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Unable to Create Table" + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
     }
 }
