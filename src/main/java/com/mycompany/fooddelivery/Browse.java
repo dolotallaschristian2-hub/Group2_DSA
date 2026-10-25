@@ -176,7 +176,10 @@ public class Browse extends JFrame implements ActionListener{
          }else if(e.getSource() == orders){
              
          }else if(e.getSource() == settings){
-             
+             Settings s = new Settings();
+             s.setVisible(true);
+             this.dispose();
+                     
          }else if(e.getSource() == profile){
              
          }else if(e.getSource() == logout){
