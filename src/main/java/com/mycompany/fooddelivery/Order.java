@@ -78,19 +78,19 @@ public class Order extends JFrame implements ActionListener{
         side.add(logout);
         
         mcdo = new JButton("Mcdonalds");
-        mcdo.setBounds(50, 35, 200, 60);
+        mcdo.setBounds(80, 35, 200, 60);
         panel.add(mcdo);
         
         jol = new JButton("Jollibee");
-        jol.setBounds(50, 110, 200, 60);
+        jol.setBounds(80, 110, 200, 60);
         panel.add(jol);
         
         mang = new JButton("Mang Inasal");
-        mang.setBounds(50, 190, 200, 60);
+        mang.setBounds(80, 190, 200, 60);
         panel.add(mang);
         
         chow = new JButton("Chowking");
-        chow.setBounds(50, 265, 200, 60);
+        chow.setBounds(80, 265, 200, 60);
         panel.add(chow);
         
         home.addActionListener(this);
