@@ -124,6 +124,9 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                     try {
                         // Verify the password
                         if (encryption.Password(password, hash)) {
+                            
+                            int customerid = res.getInt("id");
+                            
                             JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
 
                             Homepage home = new Homepage(customerid);

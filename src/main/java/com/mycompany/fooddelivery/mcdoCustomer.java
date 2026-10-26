@@ -270,9 +270,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
     private void placeOrder(boolean isPriority) {
 
         if (cartItems.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                this, "Your shopping cart is empty."
-            );
+            JOptionPane.showMessageDialog(this, "Your shopping cart is empty.");
             return;
         }
 
@@ -280,32 +278,24 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         String customerPhone = phone.getText().trim();
         String deliveryAddress = address.getText().trim();
 
-        if (name.isEmpty() || customerPhone.isEmpty()
-                || deliveryAddress.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Please enter your name, phone number, "
-                + "and delivery address."
-            );
+        if (name.isEmpty() || customerPhone.isEmpty()|| deliveryAddress.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Please enter your name, phone number and delivery address.");
             return;
         }
 
         String items = String.join(", ", cartItems);
+        int level = isPriority ? 0 : 1;
+        String type = isPriority ? "PRIORITY" : "NORMAL";
 
-        int level = 0;
-        String type = "NORMAL";
-
-        Order order = new Order(
-            orderCounter++,
-            items,
-            cartTotal,
-            level,
-            type,
-            name,
-            customerPhone,
-            deliveryAddress
-        );
-
+          Order order = new Order(0, items, cartTotal, level, type, name, customerPhone, deliveryAddress);
+          
+          int saveOrderid = saveOrderDB(order);
+          if(saveOrderid == -1){
+              return;
+          }
+          
+          order.orderNo = saveOrderid;
+          
         if (isPriority) {
             priorityQueue.offer(order);
         } else {
@@ -353,20 +343,18 @@ public class mcdoCustomer extends JFrame implements ActionListener {
     
     private int saveOrderDB(Order order){
      String sql = "INSERT INTO orders ("
-             + "orderid, customerid, itemid, items, address, "
-             + "total, status) VALUES (?, ?, ?, ?, ?, ?, ?) ";  
+             + "customerid, items, address, "
+             + "total, status) VALUES (?, ?, ?, ?, ?) ";  
              
              try {
                  Connection c = DBConnection.getConnection();
                  PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                  
-                p.setString(1, order.customer);
-                p.setString(2, order.phone);
+                p.setInt(1, customerid);
+                p.setString(2, order.items);
                 p.setString(3, order.address);
-                p.setString(4, order.items);
-                p.setString(5, order.type);
-                p.setDouble(6, order.total);
-                p.setString(7, "Pending");
+                p.setDouble(4, order.total);
+                p.setString(5, "Pending");
                  
                 p.executeUpdate();
                 
@@ -386,7 +374,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
                      CREATE TABLE IF NOT EXISTS orders(
                          orderid INT AUTO_INCREMENT PRIMARY KEY,
                          customerid INT NOT NULL,
-                         itemid INT NOT NULL,
+                         itemid INT NULL,
                          items TEXT NOT NULL,
                          address VARCHAR (255) NOT NULL,
                          total DECIMAL (10, 2) NOT NULL,
@@ -415,12 +403,13 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         try {
         int orderId = Integer.parseInt(input.trim());
 
-        String sql = "SELECT status FROM orders WHERE orderid = ?";
+        String sql = "SELECT status FROM orders WHERE orderid = ? AND customerid = ?";
 
         try (Connection c = DBConnection.getConnection();
              PreparedStatement p = c.prepareStatement(sql)) {
 
             p.setInt(1, orderId);
+            p.setInt(2, customerid);
 
             try (ResultSet rs = p.executeQuery()) {
                 if (rs.next()) {
