@@ -21,7 +21,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
     private JTextArea address;
     private double cartTotal = 0;
     private int orderCounter = 1;
-    private JButton addBtn, normalBtn, priorityBtn, serveBtn;
+    private JButton addBtn, normalBtn, priorityBtn, trackbtn;
     private ArrayList<String> cartItems;
     private JScrollPane cartScroll, menuScroll, addressScroll, queueScroll;
     private Queue<Order> normalQueue = new LinkedList<>();
@@ -76,6 +76,8 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
+        CreateTable();
+        
         title = new JLabel("ONLINE FOOD DELIVERY", SwingConstants. CENTER);
         title.setBounds(220, 10, 300, 25);
         add(title);
@@ -163,11 +165,11 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         priorityBtn.addActionListener(e -> placeOrder(true));
         add(priorityBtn);
 
-        serveBtn = new JButton("Serve Next Order");
-        serveBtn.setBounds(410, 475, 255, 30);
-        serveBtn.addActionListener(e -> serveNext());
-        add(serveBtn);
-
+        trackbtn = new JButton("Track My Order");
+        trackbtn.setBounds(400, 500, 150, 35);
+        trackbtn.addActionListener(this);
+        add(trackbtn);
+        
         queueLabel = new JLabel("Delivery Order Queue");
         queueLabel.setBounds(20, 515, 250, 25);
         add(queueLabel);
@@ -230,6 +232,9 @@ public class mcdoCustomer extends JFrame implements ActionListener {
                 "Total: P" + String.format("%.2f", cartTotal)
             );
         }
+        else if(e.getSource() == trackbtn){
+            trackMyOrder();
+        }
     }
 
     private void loadMenu() {
@@ -286,33 +291,6 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         int level = 0;
         String type = "NORMAL";
 
-        if (isPriority) {
-
-            String[] options = {
-                "Senior/PWD",
-                "Rush",
-                "Member"
-            };
-
-            int choice = JOptionPane.showOptionDialog(
-                this,
-                "Select priority category:",
-                "Priority Delivery",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]
-            );
-
-            if (choice == -1) {
-                return;
-            }
-
-            level = choice + 1;
-            type = options[choice];
-        }
-
         Order order = new Order(
             orderCounter++,
             items,
@@ -347,30 +325,6 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         refreshQueues();
     }
 
-    private void serveNext() {
-
-        Order served;
-
-        if (!priorityQueue.isEmpty()) {
-            served = priorityQueue.poll();
-        } else if (!normalQueue.isEmpty()) {
-            served = normalQueue.poll();
-        } else {
-            JOptionPane.showMessageDialog(
-                this, "There are no pending delivery orders."
-            );
-            return;
-        }
-
-        JOptionPane.showMessageDialog(
-            this,
-            "Order is now being processed for delivery:\n\n"
-            + served
-        );
-
-        refreshQueues();
-    }
-
     private void refreshQueues() {
 
         StringBuilder sb = new StringBuilder();
@@ -392,4 +346,105 @@ public class mcdoCustomer extends JFrame implements ActionListener {
 
         queueArea.setText(sb.toString());
     }
+    
+    private int saveOrderDB(Order order){
+     String sql = "INSERT INTO orders ("
+             + "orderid, customerid, itemid, items, address, "
+             + "total, status) VALUES (?, ?, ?, ?, ?, ?, ?) ";  
+             
+             try {
+                 Connection c = DBConnection.getConnection();
+                 PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                 
+                p.setString(1, order.customer);
+                p.setString(2, order.phone);
+                p.setString(3, order.address);
+                p.setString(4, order.items);
+                p.setString(5, order.type);
+                p.setDouble(6, order.total);
+                p.setString(7, "Pending");
+                 
+                p.executeUpdate();
+                
+                ResultSet rs = p.getGeneratedKeys();
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
+             }catch(SQLException ex){
+                 JOptionPane.showMessageDialog(this, "Unable to save order: " + ex.getMessage());
+             }
+             return -1;      
+    }
+    
+    
+    public static void CreateTable(){
+        String sql = """
+                     CREATE TABLE IF NOT EXISTS orders(
+                         orderid INT AUTO_INCREMENT PRIMARY KEY,
+                         customerid INT NOT NULL,
+                         itemid INT NOT NULL,
+                         items TEXT NOT NULL,
+                         address VARCHAR (255) NOT NULL,
+                         total DECIMAL (10, 2) NOT NULL,
+                         status VARCHAR (30) DEFAULT 'Pending'
+                         );""";
+    
+    try{
+            Connection c = DBConnection.getConnection();
+            PreparedStatement p = c.prepareStatement(sql);
+            
+            p.executeUpdate();
+            System.out.println("Table is Ready");
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Unable to Create Table" + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    
+    }
+    private void trackMyOrder() {
+        String input = JOptionPane.showInputDialog(this,"Enter your Order ID:");
+
+        if (input == null || input.trim().isEmpty()) {
+        return;
+        }
+
+        try {
+        int orderId = Integer.parseInt(input.trim());
+
+        String sql = "SELECT status FROM orders WHERE orderid = ?";
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+
+            p.setInt(1, orderId);
+
+            try (ResultSet rs = p.executeQuery()) {
+                if (rs.next()) {
+                    String status = rs.getString("status");
+
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Order ID: " + orderId
+                        + "\nStatus: " + status,
+                        "Order Tracking",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                } else {
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Order ID not found.",
+                        "Order Tracking",
+                        JOptionPane.WARNING_MESSAGE
+                    );
+                }
+            }
+        }
+
+        } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this,"Please enter a valid numeric Order ID.");
+        
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,"Unable to track order: " + ex.getMessage());
+    }
+}
 }
