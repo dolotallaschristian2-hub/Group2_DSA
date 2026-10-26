@@ -149,7 +149,7 @@ public class menuaddMang extends JFrame implements ActionListener{
                 + "foodID INT NOT NULL,"
                 + "foodname VARCHAR (100) NOT NULL,"
                 + "description VARCHAR (255) NOT NULL,"
-                + "prices DECIMAL (10, 2) NOT NULL"
+                + "prices DECIMAL (10, 2) NOT NULL,"
                 + "availability VARCHAR (20) DEFAULT 'available');";
         
         try{

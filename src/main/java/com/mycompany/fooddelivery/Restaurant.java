@@ -141,7 +141,7 @@ public class Restaurant extends JFrame implements ActionListener {
     }
     
     public static void CreateTable(){
-        String sql = "CREATE TALBE IF NOT EXISTS restaurants_accounts("
+        String sql = "CREATE TABLE IF NOT EXISTS restaurant_accounts("
                 + "id INT AUTO_INCREMENT PRIMARY KEY,"
                 + "username VARCHAR (50) NOT NULL UNIQUE,"
                 + "password VARCHAR (255) NOT NULL);";

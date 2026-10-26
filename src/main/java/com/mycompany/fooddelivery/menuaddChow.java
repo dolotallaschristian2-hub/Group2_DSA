@@ -143,10 +143,10 @@ public class menuaddChow extends JFrame implements ActionListener{
     }
     public static void CreateTable(){
         String sql = "CREATE TABLE IF NOT EXISTS menu_chow("
-                + "restaurant_id INT NOT NULL,"
+                + "restaurant_id INT NOT NULL PRIMARY KEY,"
                 + "item_name VARCHAR(100) NOT NULL,"
-                + "description VARCHAR(255) NOT NULL"
-                + "price DECIMALS (10,2) NOT NULL"
+                + "description VARCHAR(255) NOT NULL,"
+                + "price DECIMAL (10,2) NOT NULL,"
                 + "availability VARCHAR (20) DEFAULT 'available');";
         try{
             Connection c = DBConnection.getConnection();

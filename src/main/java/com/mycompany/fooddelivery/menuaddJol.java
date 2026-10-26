@@ -142,10 +142,10 @@ public class menuaddJol extends JFrame implements ActionListener{
     
     public static void CreateTable(){
         String sql = "CREATE TABLE IF NOT EXISTS menu_jollibee("
-                + "foodID INT NOT NULL,"
+                + "foodID INT NOT NULL PRIMARY KEY,"
                 + "foodName VARCHAR(100) NOT NULL,"
-                + "description VARCHAR(255) NOT NULL"
-                + "prices DECIMALS (10,2) NOT NULL"
+                + "description VARCHAR(255) NOT NULL,"
+                + "prices DECIMAL (10,2) NOT NULL,"
                 + "availability VARCHAR (20) DEFAULT 'available');";
         try{
             Connection c = DBConnection.getConnection();
