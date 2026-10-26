@@ -112,7 +112,7 @@ public class profile extends JFrame implements ActionListener {
         }else if(e.getSource() == logout){
             int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to logout?", "Log out", JOptionPane.YES_NO_OPTION);
             if(confirm == JOptionPane.YES_OPTION){
-                fooddeliveryGUI g = new fooddeliveryGUI();
+                fooddeliveryGUI g = new fooddeliveryGUI(customerid);
                     g.setVisible(true);
                     this.dispose();
             }

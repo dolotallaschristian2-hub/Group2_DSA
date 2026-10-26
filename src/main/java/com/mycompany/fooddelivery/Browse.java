@@ -23,6 +23,7 @@ public class Browse extends JFrame implements ActionListener{
         setTitle("Bai N Eat - Browse");
         
         this.customerid = customerid;
+        
         Color red = new Color(35, 35 ,35);
         Color dirty = new Color(220, 220, 190);
         
@@ -193,7 +194,7 @@ public class Browse extends JFrame implements ActionListener{
          }else if(e.getSource() == logout){
              int confirm = JOptionPane.showConfirmDialog(this, "Are you sure to logout?", "Logout", JOptionPane.YES_NO_OPTION);
              if(confirm == JOptionPane.YES_OPTION){
-                  fooddeliveryGUI g = new fooddeliveryGUI();
+                  fooddeliveryGUI g = new fooddeliveryGUI(customerid);
                     g.setVisible(true);
                     this.dispose();
              }

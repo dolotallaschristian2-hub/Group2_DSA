@@ -5,8 +5,10 @@ import java.sql.Connection;
 public class FoodDelivery {
 
     public static void main(String[] args) {
-       
-        Choices cs = new Choices();
+        
+        int customerid = 1;
+        
+        Choices cs = new Choices(customerid);
         cs.setVisible(true);
         Connection c = DBConnection.getConnection();
 

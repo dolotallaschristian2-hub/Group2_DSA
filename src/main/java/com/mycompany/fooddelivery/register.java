@@ -15,16 +15,18 @@ public class register extends JFrame implements ActionListener{
     private JPasswordField pass, confirm;
     private JButton create, back;
     private JPanel panel;
-            
+    private int customerid;       
     
     
-    public register(){
+    public register(int customerid){
         setTitle("Registration");
         setSize(600, 600);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         panel = new JPanel();
         panel.setBounds(120, 120, 360, 250);
@@ -110,7 +112,7 @@ public class register extends JFrame implements ActionListener{
 //                   This would occur if they are successfully give the neccessary requirements 
                    JOptionPane.showMessageDialog(this, "Account is Created", "Account", JOptionPane.INFORMATION_MESSAGE);
                 
-                fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
+                fooddeliveryGUI fooddelivery = new fooddeliveryGUI(customerid);
                 fooddelivery.setVisible (true);
                 this.dispose();
                 }
@@ -124,7 +126,7 @@ public class register extends JFrame implements ActionListener{
         }
         else if(e.getSource() == back){
 //            Going back to the login page
-            fooddeliveryGUI fd = new fooddeliveryGUI();
+            fooddeliveryGUI fd = new fooddeliveryGUI(customerid);
             fd.setVisible(true);
             this.dispose();
         }

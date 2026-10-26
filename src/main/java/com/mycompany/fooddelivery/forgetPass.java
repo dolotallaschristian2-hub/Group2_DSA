@@ -16,14 +16,17 @@ public class forgetPass extends JFrame implements ActionListener {
     private JPasswordField pass;
     private JButton upd, back;
     private JPanel panel;
+    private int customerid;
     
-    forgetPass(){
+    forgetPass(int customerid){
         setSize(500, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setTitle("Forget Password");
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         panel = new JPanel();
         panel.setBounds(50, 50, 400, 400);
@@ -105,7 +108,7 @@ public class forgetPass extends JFrame implements ActionListener {
                     cv.close();
                     search.close();
                     
-                    fooddeliveryGUI fd = new fooddeliveryGUI();
+                    fooddeliveryGUI fd = new fooddeliveryGUI(customerid);
                     fd.setVisible(true);
                     this.dispose();
                 }
@@ -118,7 +121,7 @@ public class forgetPass extends JFrame implements ActionListener {
             }  
         }
         else if(e.getSource() == back){
-            fooddeliveryGUI fd = new fooddeliveryGUI();
+            fooddeliveryGUI fd = new fooddeliveryGUI(customerid);
             fd.setVisible(true);
             this.dispose();
         }

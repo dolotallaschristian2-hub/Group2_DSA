@@ -8,13 +8,16 @@ import javax.swing.*;
 public class RestaurantHome extends JFrame implements ActionListener{
         private JButton mcd, chow, jol, mang, back, logout;
         private JLabel title;
+        private int customerid;
         
-        RestaurantHome(){
+            RestaurantHome(int customerid){
             setSize(600, 600);
             setLayout(null);
             setLocationRelativeTo(null);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
             setResizable(false);
+            
+            this.customerid = customerid;
             
             title = new JLabel("Welcome",SwingConstants.CENTER);
             title.setBounds(250, 30, 100, 30);
@@ -70,7 +73,7 @@ public class RestaurantHome extends JFrame implements ActionListener{
             }else if(e.getSource() == logout){
                 int confirm = JOptionPane.showConfirmDialog(this, "Log out?", "Logout", JOptionPane.YES_NO_OPTION);
                 if(confirm == JOptionPane.YES_OPTION){
-                    Restaurant r = new Restaurant();
+                    Restaurant r = new Restaurant(customerid);
                     r.setVisible(true);
                     this.dispose();
                 }

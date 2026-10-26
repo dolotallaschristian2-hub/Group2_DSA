@@ -15,9 +15,9 @@ public class Restaurant extends JFrame implements ActionListener {
     private JTextField text;
     private JPasswordField password;
     private JPanel panel;
-    
+    private int customerid; 
  
-    Restaurant(){
+    Restaurant(int customerid){
         setSize(600, 600);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -25,6 +25,7 @@ public class Restaurant extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         
         CreateTable();
+        this.customerid = customerid;
         
         panel = new JPanel();
         panel.setLayout(null);
@@ -97,7 +98,7 @@ public class Restaurant extends JFrame implements ActionListener {
                                         try{
                                             if(encryption.Password(pass, hash)){
                                                 JOptionPane.showMessageDialog(this, "Login Sucessfully", "Login", JOptionPane.INFORMATION_MESSAGE);
-                                                RestaurantHome h = new RestaurantHome();
+                                                RestaurantHome h = new RestaurantHome(customerid);
                                                 h.setVisible(true);
                                                 this.dispose();
                                             }else{
@@ -127,12 +128,12 @@ public class Restaurant extends JFrame implements ActionListener {
         else if(e.getSource() == back){
             int confirm = JOptionPane.showConfirmDialog(this, "Back?", "Info", JOptionPane.YES_NO_OPTION);
             if(confirm == JOptionPane.YES_OPTION ){
-                Choices g = new Choices();
+                Choices g = new Choices(customerid);
                 g.setVisible(true);
                 this.dispose();
             }
         }else if(e.getSource() == create){
-            restaurant_register r = new restaurant_register();
+            restaurant_register r = new restaurant_register(customerid);
             r.setVisible(true);
             this.dispose();
         }

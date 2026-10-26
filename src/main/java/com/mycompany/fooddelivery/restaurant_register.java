@@ -12,13 +12,16 @@ public class restaurant_register extends JFrame implements ActionListener{
     private JButton create, back, agains;
     private JTextArea text;
     private JPasswordField pass, another;
+    private int customerid;
     
-    restaurant_register(){
+        restaurant_register(int customerid){
         setSize(600, 600);
         setLocationRelativeTo(null);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         label = new JLabel("Create Account", SwingConstants.CENTER);
         label.setBounds(220, 90, 120, 30);
@@ -87,7 +90,7 @@ public class restaurant_register extends JFrame implements ActionListener{
                         int Resultset = p.executeUpdate();
                         JOptionPane.showMessageDialog(this, "Account is Created", "Info", JOptionPane.INFORMATION_MESSAGE);
                         
-                        Restaurant r = new Restaurant();
+                        Restaurant r = new Restaurant(customerid);
                         r.setVisible(true);
                         this.dispose();
                         

@@ -16,9 +16,9 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
     private JTextArea txauser;
     private JPasswordField jpfpass;
     private JPanel panel;
+    private int customerid;
     
-    
-    fooddeliveryGUI(){
+    fooddeliveryGUI(int customerid){
         setSize(600, 700);
         setTitle("Bai N Eat");
         setLayout(null);
@@ -27,7 +27,8 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         
         Createtable();
-       
+        this.customerid = customerid;
+        
         panel = new JPanel();
         panel.setBounds(30, 80, 520, 500);
         panel.setBackground(Color.gray);
@@ -117,7 +118,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
             // Check whether the username exists
                 if (res.next()) {
                     String hash = res.getString("password");
-                    
+
                     if (hash != null && !hash.isEmpty()) {
 
                     try {
@@ -125,12 +126,9 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                         if (encryption.Password(password, hash)) {
                             JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
 
-                             int customerId = res.getInt("id");
-
-                            mcdoCustomer mcdo = new mcdoCustomer(customerId);
-                            mcdo.setVisible(true);
+                            Homepage home = new Homepage(customerid);
+                            home.setVisible(true);
                             this.dispose();
-                            
                         } else {
                             JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
                         }
@@ -162,19 +160,19 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
 
        else if(e.getSource() == btnregister){
 //           Goes to the register class
-           register reg = new register();
+           register reg = new register(customerid);
            reg.setVisible(true);
            this.dispose();
        }
        else if (e.getSource() == back){
 //           Goes to the choices class
-            Choices cs = new Choices();
+            Choices cs = new Choices(customerid);
             cs.setVisible(true);
             this.dispose();
         }
        else if (e.getSource() == fpass){
 //           Goes to the forgetPass class
-            forgetPass fp = new forgetPass();
+            forgetPass fp = new forgetPass(customerid);
             fp.setVisible(true);
             this.dispose();
        }
