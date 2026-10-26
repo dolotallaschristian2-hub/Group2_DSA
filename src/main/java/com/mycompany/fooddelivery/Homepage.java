@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 
 public class Homepage extends JFrame implements ActionListener  {
-    
+    private int customerId;
     private LinkedList<String> menuData = new LinkedList<>();
     private JLabel lblDashboard, bannerTitle;
     private JMenuBar menuBar;
@@ -21,7 +21,7 @@ public class Homepage extends JFrame implements ActionListener  {
     private JButton home, browse, orders, profile, settings, logout, mcdo, jollibee, manginasal, chowking;
     private JTextField search;
     
-    public Homepage(){
+    public Homepage(int customerId){
         setSize(600, 600);
         setTitle("Bai N Eat");
         setLayout(null);
@@ -34,6 +34,7 @@ public class Homepage extends JFrame implements ActionListener  {
         Color black = new Color(35, 35, 35);
         Color dirty = new Color(220, 220, 190);
         
+        this.customerId = customerId;
         //initialize menubar and menu
 //      Panels
         sidebar = new JPanel();
@@ -147,27 +148,27 @@ public class Homepage extends JFrame implements ActionListener  {
     @Override
     public void actionPerformed(ActionEvent e) {
                 if(e.getSource() == home){
-                    Homepage hm = new Homepage();
+                    Homepage hm = new Homepage(customerId);
                     hm.setVisible(true);
                     this.dispose();
                     
                 }else if(e.getSource() == browse){
-                    Browse b = new  Browse();
+                    Browse b = new Browse(customerId);
                     b.setVisible(true);
                     this.dispose();
                     
                 }else if(e.getSource()== orders){
-                    Order o = new Order();
+                    Order o = new Order(customerId);
                     o.setVisible(true);
                     this.dispose();
                     
                 }else if(e.getSource()== profile){
-                    profile p = new profile();
+                    profile p = new profile(customerId);
                     p.setVisible(true);
                     this.dispose();
                     
                 }else if(e.getSource()== settings){
-                    Settings s = new Settings();
+                    Settings s = new Settings(customerId);
                     s.setVisible(true);
                     this.dispose();
                      
@@ -180,8 +181,8 @@ public class Homepage extends JFrame implements ActionListener  {
                     }
                     
                 }else if(e.getSource() == mcdo){
-                    mcdoCustomer cs = new mcdoCustomer();
-                    cs.setVisible(true);
+                    mcdoCustomer mcdo = new mcdoCustomer(customerId);
+                    mcdo.setVisible(true);
                     this.dispose();
                     
                 }else if(e.getSource() == jollibee){

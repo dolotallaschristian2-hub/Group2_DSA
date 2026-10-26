@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class Browse extends JFrame implements ActionListener{
-    
+    private int customerid;
     private JLabel title, MCDO, JOL, MANG, infomc, infojol, infomang, pricemc, pricejol, pricemang;
     private JButton mcdo, jol, mang, home, browse, orders, profile, settings,logout;
     private JTextField carttext;
@@ -14,7 +14,7 @@ public class Browse extends JFrame implements ActionListener{
 
     private double total = 0;
     
-    Browse(){
+    Browse(int customerid){
         setSize(600, 600);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -22,6 +22,7 @@ public class Browse extends JFrame implements ActionListener{
         setResizable(false);
         setTitle("Bai N Eat - Browse");
         
+        this.customerid = customerid;
         Color red = new Color(35, 35 ,35);
         Color dirty = new Color(220, 220, 190);
         
@@ -166,26 +167,26 @@ public class Browse extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
          if(e.getSource() == home){
-             Homepage h = new Homepage();
+             Homepage h = new Homepage(customerid);
              h.setVisible(true);
              this.dispose();
          }else if(e.getSource() == browse){
-             Browse s = new Browse();
+             Browse s = new Browse(customerid);
              s.setVisible(true);
              this.dispose();
              
          }else if(e.getSource() == orders){
-            Order o = new Order();
+            Order o = new Order(customerid);
             o.setVisible(true);
             this.dispose();
             
          }else if(e.getSource() == settings){
-             Settings s = new Settings();
+             Settings s = new Settings(customerid);
              s.setVisible(true);
              this.dispose();
                      
          }else if(e.getSource() == profile){
-                profile p = new profile();
+                profile p = new profile(customerid);
                 p.setVisible(true);
                 this.dispose();
                 

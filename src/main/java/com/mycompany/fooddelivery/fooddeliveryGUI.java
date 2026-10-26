@@ -117,7 +117,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
             // Check whether the username exists
                 if (res.next()) {
                     String hash = res.getString("password");
-
+                    
                     if (hash != null && !hash.isEmpty()) {
 
                     try {
@@ -125,9 +125,12 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
                         if (encryption.Password(password, hash)) {
                             JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
 
-                            Homepage home = new Homepage();
-                            home.setVisible(true);
+                             int customerId = res.getInt("id");
+
+                            mcdoCustomer mcdo = new mcdoCustomer(customerId);
+                            mcdo.setVisible(true);
                             this.dispose();
+                            
                         } else {
                             JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
                         }

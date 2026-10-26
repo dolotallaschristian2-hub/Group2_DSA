@@ -11,8 +11,9 @@ public class profile extends JFrame implements ActionListener {
     private JLabel set;
     private JPanel side;
     private JButton home, browse, orders, settings, profile, logout;
-    
-    profile(){
+    private int customerid;
+            
+    profile(int customerid){
         setSize(600, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -20,6 +21,7 @@ public class profile extends JFrame implements ActionListener {
         setResizable(false);
         setTitle("Bai N Eat - Settings");
         
+        this.customerid = customerid;
         
         Color red = new Color(35, 35,35);
         Color dirty = new Color (220, 220, 190);
@@ -82,28 +84,28 @@ public class profile extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
          if(e.getSource() == home){
-            Homepage h = new Homepage();
+            Homepage h = new Homepage(customerid);
             h.setVisible(true);
             this.dispose();
             
         }else if (e.getSource() == browse){
-            Browse b = new Browse();
+            Browse b = new Browse(customerid);
             b.setVisible(true);
             this.dispose();
             
         }else if(e.getSource() == orders){
             
-            Order o = new Order();
+            Order o = new Order(customerid);
             o.setVisible(true);
             this.dispose();
             
         }else if(e.getSource() == settings){
-            Settings s = new Settings();
+            Settings s = new Settings(customerid);
             s.setVisible(true);
             this.dispose();
             
         }else if(e.getSource() == profile){
-            profile p = new profile();
+            profile p = new profile(customerid);
             p.setVisible(true);
             this.dispose();
             
