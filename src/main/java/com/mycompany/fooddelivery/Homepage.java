@@ -181,12 +181,15 @@ public class Homepage extends JFrame implements ActionListener  {
                     }
                     
                 }else if(e.getSource() == mcdo){
-                    mcdoCustomer mcdo = new mcdoCustomer(customerId);
-                    mcdo.setVisible(true);
+                    mcdoCustomer m = new mcdoCustomer(customerId);
+                    m.setVisible(true);
                     this.dispose();
                     
                 }else if(e.getSource() == jollibee){
-                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                     jolCustomer j = new jolCustomer(customerId);
+                     j.setVisible(true);
+                     this.dispose();
+                     
                 }else if(e.getSource() == manginasal){
                      JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }else if(e.getSource() == chowking){
