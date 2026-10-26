@@ -103,9 +103,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         add(menuScroll);
 
         // Food selection
-        sizes = new JComboBox<>(
-            new String[]{"Small", "Medium", "Large"}
-        );
+        sizes = new JComboBox<>(new String[]{"Small", "Medium", "Large", "None"});
         sizes.setBounds(20, 205, 100, 30);
         add(sizes);
 
@@ -161,17 +159,17 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         // Delivery buttons
         normalBtn = new JButton("Normal Delivery");
         normalBtn.setBounds(20, 475, 180, 30);
-        normalBtn.addActionListener(e -> placeOrder(false));
+       
         add(normalBtn);
 
         priorityBtn = new JButton("Priority Delivery");
         priorityBtn.setBounds(215, 475, 180, 30);
-        priorityBtn.addActionListener(e -> placeOrder(true));
+      
         add(priorityBtn);
 
         trackbtn = new JButton("Track My Order");
-        trackbtn.setBounds(400, 500, 150, 35);
-        trackbtn.addActionListener(this);
+        trackbtn.setBounds(400, 475, 150, 35);
+   
         add(trackbtn);
         
         queueLabel = new JLabel("Delivery Order Queue");
@@ -188,8 +186,11 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         loadMenu();
         refreshQueues();
         setVisible(true);
-        
+            
+        trackbtn.addActionListener(this);
         addBtn.addActionListener(this);
+        normalBtn.addActionListener(e -> placeOrder(false));
+        priorityBtn.addActionListener(e -> placeOrder(true));
     }
 
     @Override
@@ -216,7 +217,10 @@ public class mcdoCustomer extends JFrame implements ActionListener {
             String size = sizes.getSelectedItem().toString();
 
             double multiplier = size.equals("Small") ? 1.0
-                : size.equals("Medium") ? 1.2 : 1.5;
+                              : size.equals("Medium") ? 1.2
+                              : size.equals("Large") ? 1.5
+                              : size.equals("None") ? 1.0
+                              : 1.0;
 
             double subtotal = price * multiplier * quantity;
 
@@ -302,13 +306,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
             normalQueue.offer(order);
         }
 
-        JOptionPane.showMessageDialog(
-            this,
-            "Order placed successfully!\n"
-            + "Order Number: #" + order.orderNo
-            + "\nDelivery Type: " + type
-            + "\nTotal: P" + String.format("%.2f", order.total)
-        );
+        JOptionPane.showMessageDialog(this,"Order placed successfully!\n"+ "Order Number: #" + order.orderNo+ "\nDelivery Type: " + type+ "\nTotal: P" + String.format("%.2f", order.total));
 
         cartItems.clear();
         cartTotal = 0;
@@ -374,7 +372,6 @@ public class mcdoCustomer extends JFrame implements ActionListener {
                      CREATE TABLE IF NOT EXISTS orders(
                          orderid INT AUTO_INCREMENT PRIMARY KEY,
                          customerid INT NOT NULL,
-                         itemid INT NULL,
                          items TEXT NOT NULL,
                          address VARCHAR (255) NOT NULL,
                          total DECIMAL (10, 2) NOT NULL,
@@ -415,20 +412,9 @@ public class mcdoCustomer extends JFrame implements ActionListener {
                 if (rs.next()) {
                     String status = rs.getString("status");
 
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Order ID: " + orderId
-                        + "\nStatus: " + status,
-                        "Order Tracking",
-                        JOptionPane.INFORMATION_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(this,"Order ID: " + orderId+ "\nStatus: " + status,"Order Tracking",JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(
-                        this,
-                        "Order ID not found.",
-                        "Order Tracking",
-                        JOptionPane.WARNING_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(this,"Order ID not found.","Order Tracking",JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
