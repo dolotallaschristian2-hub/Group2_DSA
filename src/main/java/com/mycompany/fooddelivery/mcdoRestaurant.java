@@ -64,7 +64,7 @@ public class mcdoRestaurant extends JFrame implements ActionListener {
             this.dispose();
             
         }else if(e.getSource() == delivered){
-            
+            markDelivered();
         }
     
     
@@ -122,6 +122,54 @@ private void load() {
                     + " | Customer: " + customerId
                     + " | " + status
                     + " | " + items;
+        }
+    }
+    
+    private void markDelivered() {
+        OrderInfo selected = list.getSelectedValue();
+
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select an order first.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Mark Order #" + selected.id + " as delivered?",
+                "Confirm Delivery",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String sql = "UPDATE orders SET status = 'Delivered' "
+                + "WHERE orderid = ? "
+                + "AND status <> 'Delivered'";
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+
+            p.setInt(1, selected.id);
+
+            int updated = p.executeUpdate();
+
+            if (updated > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Order #" + selected.id
+                                + " has been delivered.");
+                load();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Order was already delivered or not found.");
+                load();
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unable to update order: " + ex.getMessage());
         }
     }
 }
