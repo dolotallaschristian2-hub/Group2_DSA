@@ -78,7 +78,10 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         setResizable(false);
 
         CreateTable();
+<<<<<<< HEAD
         this.customerid = customerid;
+=======
+>>>>>>> 5917c0602d8ce10977658575457967d665439367
         
         title = new JLabel("ONLINE FOOD DELIVERY", SwingConstants. CENTER);
         title.setBounds(220, 10, 300, 25);
