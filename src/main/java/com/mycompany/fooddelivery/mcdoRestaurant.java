@@ -1,4 +1,4 @@
-    package com.mycompany.fooddelivery;
+package com.mycompany.fooddelivery;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,19 +33,19 @@ public class mcdoRestaurant extends JFrame implements ActionListener {
         listmodel = new DefaultListModel<>();
         list = new JList<>(listmodel);
         scroll = new JScrollPane(list);
-        scroll.setBounds(70, 120, 350, 250);
+        scroll.setBounds(70, 120, 500, 300);
         add(scroll);
         
         shows = new JButton("Show Order");
-        shows.setBounds(440, 120, 120, 30);
+        shows.setBounds(70, 450, 120, 30);
         add(shows);
         
         menuadd = new JButton("Add Menu");
-        menuadd.setBounds(440, 170, 120, 30);
+        menuadd.setBounds(220, 450, 120, 30);
         add(menuadd);
         
         delivered = new JButton("Delivered");
-        delivered.setBounds(440, 220, 120, 30);
+        delivered.setBounds(370, 450, 120, 30);
         add(delivered);
         
         shows.addActionListener(this);
@@ -74,8 +74,12 @@ public class mcdoRestaurant extends JFrame implements ActionListener {
 private void load() {
     listmodel.clear();
 
-    String sql = "SELECT orderid, customerid, items, status "
-            + "FROM orders WHERE status <> 'Delivered'";
+    String sql = "SELECT orderid, customerid, items, status, type "
+            + "FROM orders WHERE status <> 'Delivered' "
+            + "ORDER BY CASE "
+            + "WHEN UPPER (type) = 'PRIORITY' THEN 0 "
+            + "WHEN UPPER (type) = 'NORMAL' THEN 1 "
+            + "ELSE 2 END, orderid ASC ;";
 
     try (Connection c = DBConnection.getConnection();
          PreparedStatement p = c.prepareStatement(sql);
@@ -86,7 +90,8 @@ private void load() {
                     rs.getInt("orderid"),
                     rs.getInt("customerid"),
                     rs.getString("items"),
-                    rs.getString("status")
+                    rs.getString("status"),
+                    rs.getString("type")
             ));
         }
 
@@ -107,13 +112,15 @@ private void load() {
         int customerId;
         String items;
         String status;
+        String type;
 
         OrderInfo(int id, int customerId,
-                  String items, String status) {
+                  String items, String status, String type) {
             this.id = id;
             this.customerId = customerId;
             this.items = items;
             this.status = status;
+            this.type = type;
         }
 
         @Override
@@ -121,14 +128,15 @@ private void load() {
             return "Order #" + id
                     + " | Customer: " + customerId
                     + " | " + status
-                    + " | " + items;
+                    + " | " + items
+                    + " | " + type;
         }
     }
     
     private void markDelivered() {
         OrderInfo selected = list.getSelectedValue();
 
-        if (selected == null) {
+        if (selected == null || selected.id == 0) {
             JOptionPane.showMessageDialog(this,
                     "Please select an order first.");
             return;

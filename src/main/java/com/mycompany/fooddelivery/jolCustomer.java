@@ -24,11 +24,7 @@ public class jolCustomer extends JFrame implements ActionListener {
     private ArrayList<String> cartItems;
     private JScrollPane cartScroll, menuScroll, addressScroll, queueScroll;
     private Queue<Order> normalQueue = new LinkedList<>();
-    private PriorityQueue<Order> priorityQueue =
-        new PriorityQueue<>(
-            Comparator.comparingInt((Order o) -> o.priorityLevel)
-                      .thenComparingInt(o -> o.orderNo)
-        );
+    private PriorityQueue<Order> priorityQueue = new PriorityQueue<>(Comparator.comparingInt((Order o) -> o.priorityLevel).thenComparingInt(o -> o.orderNo));
 
     static class Order {
         int orderNo;
@@ -95,7 +91,6 @@ public class jolCustomer extends JFrame implements ActionListener {
         };
 
         menuTable = new JTable(menuModel);
-
         menuScroll = new JScrollPane(menuTable);
         menuScroll.setBounds(20, 45, 645, 150);
         add(menuScroll);
@@ -157,17 +152,14 @@ public class jolCustomer extends JFrame implements ActionListener {
         // Delivery buttons
         normalBtn = new JButton("Normal Delivery");
         normalBtn.setBounds(20, 475, 180, 30);
-       
         add(normalBtn);
 
         priorityBtn = new JButton("Priority Delivery");
         priorityBtn.setBounds(215, 475, 180, 30);
-      
         add(priorityBtn);
 
         trackbtn = new JButton("Track My Order");
         trackbtn.setBounds(400, 475, 150, 35);
-   
         add(trackbtn);
         
         queueLabel = new JLabel("Delivery Order Queue");
@@ -340,7 +332,7 @@ public class jolCustomer extends JFrame implements ActionListener {
     private int saveOrderDB(Order order){
      String sql = "INSERT INTO orders_jol ("
              + "customerid, items, address, "
-             + "total, status) VALUES (?, ?, ?, ?, ?) ";  
+             + "total, status, type) VALUES (?, ?, ?, ?, ?, ?) ";  
              
              try {
                  Connection c = DBConnection.getConnection();
@@ -351,6 +343,7 @@ public class jolCustomer extends JFrame implements ActionListener {
                 p.setString(3, order.address);
                 p.setDouble(4, order.total);
                 p.setString(5, "Pending");
+                p.setString(6, order.type);
                  
                 p.executeUpdate();
                 
@@ -367,14 +360,15 @@ public class jolCustomer extends JFrame implements ActionListener {
     
     public static void CreateTable(){
         String sql = """
-                     CREATE TABLE IF NOT EXISTS orders_jol(
-                         orderid INT AUTO_INCREMENT PRIMARY KEY,
-                         customerid INT NOT NULL,
-                         items TEXT NOT NULL,
-                         address VARCHAR (255) NOT NULL,
-                         total DECIMAL (10, 2) NOT NULL,
-                         status VARCHAR (30) DEFAULT 'Pending'
-                         );""";
+                    CREATE TABLE IF NOT EXISTS orders_jol (
+                        orderid INT AUTO_INCREMENT PRIMARY KEY,
+                        customerid INT NOT NULL,
+                        items TEXT NOT NULL,
+                        address VARCHAR(255) NOT NULL,
+                        total DECIMAL(10, 2) NOT NULL,
+                        status VARCHAR(30) DEFAULT 'Pending',
+                        type VARCHAR(20) NOT NULL DEFAULT 'NORMAL'
+                        );""";
     
     try{
             Connection c = DBConnection.getConnection();

@@ -164,12 +164,10 @@ public class mcdoCustomer extends JFrame implements ActionListener {
 
         priorityBtn = new JButton("Priority Delivery");
         priorityBtn.setBounds(215, 475, 180, 30);
-      
         add(priorityBtn);
 
         trackbtn = new JButton("Track My Order");
         trackbtn.setBounds(400, 475, 150, 35);
-   
         add(trackbtn);
         
         queueLabel = new JLabel("Delivery Order Queue");
@@ -342,41 +340,44 @@ public class mcdoCustomer extends JFrame implements ActionListener {
     private int saveOrderDB(Order order){
      String sql = "INSERT INTO orders ("
              + "customerid, items, address, "
-             + "total, status) VALUES (?, ?, ?, ?, ?) ";  
+             + "total, status, type) VALUES (?, ?, ?, ?, ?, ?) ";  
              
-             try {
-                 Connection c = DBConnection.getConnection();
-                 PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+             try (Connection c = DBConnection.getConnection();
+                 PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);){
+                 
                  
                 p.setInt(1, customerid);
                 p.setString(2, order.items);
                 p.setString(3, order.address);
                 p.setDouble(4, order.total);
                 p.setString(5, "Pending");
+                p.setString(6, order.type);
                  
                 p.executeUpdate();
                 
-                ResultSet rs = p.getGeneratedKeys();
+                try (ResultSet rs = p.getGeneratedKeys()){;
                 if(rs.next()){
                     return rs.getInt(1);
                 }
+            } 
              }catch(SQLException ex){
                  JOptionPane.showMessageDialog(this, "Unable to save order: " + ex.getMessage());
              }
-             return -1;      
+             return -1;
     }
     
     
     public static void CreateTable(){
         String sql = """
-                     CREATE TABLE IF NOT EXISTS orders(
-                         orderid INT AUTO_INCREMENT PRIMARY KEY,
-                         customerid INT NOT NULL,
-                         items TEXT NOT NULL,
-                         address VARCHAR (255) NOT NULL,
-                         total DECIMAL (10, 2) NOT NULL,
-                         status VARCHAR (30) DEFAULT 'Pending'
-                         );""";
+                     CREATE TABLE IF NOT EXISTS orders (
+                            orderid INT AUTO_INCREMENT PRIMARY KEY,
+                            customerid INT NOT NULL,
+                            items TEXT NOT NULL,
+                            address VARCHAR(255) NOT NULL,
+                            total DECIMAL(10, 2) NOT NULL,
+                            status VARCHAR(30) DEFAULT 'Pending',
+                            type VARCHAR(20) NOT NULL DEFAULT 'NORMAL'
+                                 );""";
     
     try{
             Connection c = DBConnection.getConnection();

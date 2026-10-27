@@ -199,6 +199,15 @@ public class Browse extends JFrame implements ActionListener{
                     this.dispose();
              }
              
+         }else if(e.getSource() == mcdo){
+             mcdoCustomer m = new mcdoCustomer(customerid);
+             m.setVisible(true);
+             this.dispose();
+             
+         }else if(e.getSource() == jol){
+             jolCustomer j = new jolCustomer(customerid);
+             j.setVisible(true);
+             this.dispose();
          }
     }
 
