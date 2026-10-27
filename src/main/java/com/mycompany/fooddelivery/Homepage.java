@@ -191,9 +191,14 @@ public class Homepage extends JFrame implements ActionListener  {
                      this.dispose();
                      
                 }else if(e.getSource() == manginasal){
-                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    mangCustomer s = new mangCustomer(customerId);
+                    s.setVisible(true);
+                    this.dispose();
+                    
                 }else if(e.getSource() == chowking){
-                     JOptionPane.showMessageDialog(this, "Clicked", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    chowCustomer c = new chowCustomer(customerId);
+                    c.setVisible(true);
+                    this.dispose();
                 }
             }    
 }

@@ -393,7 +393,7 @@ public class jolCustomer extends JFrame implements ActionListener {
     try {
         int orderId = Integer.parseInt(input.trim());
 
-        String sql = "SELECT status FROM orders "
+        String sql = "SELECT status FROM orders_jol "
                 + "WHERE orderid = ? AND customerid = ?";
 
         try (Connection c = DBConnection.getConnection();
@@ -407,41 +407,26 @@ public class jolCustomer extends JFrame implements ActionListener {
                     String status = rs.getString("status");
     
                     // Keep the existing order tracking function
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Order ID: " + orderId
-                            + "\nStatus: " + status,
-                            "Order Tracking",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(this,"Order ID: " + orderId+ "\nStatus: " + status,"Order Tracking",JOptionPane.INFORMATION_MESSAGE);
 
                     // Open Mapclass after finding the order
-                    MapClass map = new MapClass();
+                    MapClassJol map = new MapClassJol();
                     map.setVisible(true);
 
                 } else {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Order ID not found.",
-                            "Order Tracking",
-                            JOptionPane.WARNING_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(this,"Order ID not found.","Order Tracking",JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
 
     } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Please enter a valid numeric Order ID."
-        );
+        JOptionPane.showMessageDialog(this,"Please enter a valid numeric Order ID.");
 
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Unable to track order: " + ex.getMessage()
-        );
+        JOptionPane.showMessageDialog(this,"Unable to track order: " + ex.getMessage());
+        }
     }
 }
+
 
 

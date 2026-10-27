@@ -381,17 +381,19 @@ public class chowCustomer extends JFrame implements ActionListener {
         }
     
     }
-    private void trackMyOrder() {
+     private void trackMyOrder() {
+        
         String input = JOptionPane.showInputDialog(this,"Enter your Order ID:");
 
         if (input == null || input.trim().isEmpty()) {
         return;
-        }
+    }
 
-        try {
+    try {
         int orderId = Integer.parseInt(input.trim());
 
-        String sql = "SELECT status FROM orders_chow WHERE orderid = ? AND customerid = ?";
+        String sql = "SELECT status FROM orders_chow "
+                + "WHERE orderid = ? AND customerid = ?";
 
         try (Connection c = DBConnection.getConnection();
              PreparedStatement p = c.prepareStatement(sql)) {
@@ -402,21 +404,44 @@ public class chowCustomer extends JFrame implements ActionListener {
             try (ResultSet rs = p.executeQuery()) {
                 if (rs.next()) {
                     String status = rs.getString("status");
+    
+                    // Keep the existing order tracking function
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Order ID: " + orderId
+                            + "\nStatus: " + status,
+                            "Order Tracking",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
 
-                    JOptionPane.showMessageDialog(this,"Order ID: " + orderId+ "\nStatus: " + status,"Order Tracking",JOptionPane.INFORMATION_MESSAGE);
+                    // Open Mapclass after finding the order
+                    MapClass map = new MapClass();
+                    map.setVisible(true);
+
                 } else {
-                    JOptionPane.showMessageDialog(this,"Order ID not found.","Order Tracking",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Order ID not found.",
+                            "Order Tracking",
+                            JOptionPane.WARNING_MESSAGE
+                    );
                 }
             }
         }
 
-        } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this,"Please enter a valid numeric Order ID.");
-        
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Unable to track order: " + ex.getMessage());
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Please enter a valid numeric Order ID."
+        );
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(
+                this,
+                "Unable to track order: " + ex.getMessage()
+            );
+        }
     }
-}
 }
 
 

@@ -393,12 +393,9 @@ public class mcdoCustomer extends JFrame implements ActionListener {
     }
     private void trackMyOrder() {
         
-        String input = JOptionPane.showInputDialog(
-            this,
-            "Enter your Order ID:"
-    );
+        String input = JOptionPane.showInputDialog(this,"Enter your Order ID:");
 
-    if (input == null || input.trim().isEmpty()) {
+        if (input == null || input.trim().isEmpty()) {
         return;
     }
 
@@ -417,7 +414,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
             try (ResultSet rs = p.executeQuery()) {
                 if (rs.next()) {
                     String status = rs.getString("status");
-
+    
                     // Keep the existing order tracking function
                     JOptionPane.showMessageDialog(
                             this,

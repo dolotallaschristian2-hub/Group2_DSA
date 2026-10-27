@@ -10,7 +10,7 @@ public class Settings extends JFrame implements ActionListener {
     private int customerid;
     private JLabel set;
     private JPanel side;
-    private JButton home, browse, orders, settings, profile, logout;
+    private JButton home, browse, orders, settings, profile, logout,editProfile,changePassword, manageAddress,notifications,about;
     
     Settings(int customerid){
         setSize(600, 600);
@@ -71,6 +71,32 @@ public class Settings extends JFrame implements ActionListener {
         logout.setBackground(red);
         side.add(logout);
         
+        editProfile = new JButton("Edit Profile");
+        editProfile.setBounds(200, 100, 250, 40);
+        add(editProfile);
+
+    changePassword = new JButton("Change Password");
+    changePassword.setBounds(200, 160, 250, 40);
+    add(changePassword);
+
+    manageAddress = new JButton("Manage Address");
+    manageAddress.setBounds(200, 220, 250, 40);
+    add(manageAddress);
+
+    notifications = new JButton("Notifications");
+    notifications.setBounds(200, 280, 250, 40);
+    add(notifications);
+
+    about = new JButton("About Bai N Eat");
+    about.setBounds(200, 340, 250, 40);
+    add(about);
+
+// Register action listeners
+        editProfile.addActionListener(this);
+        changePassword.addActionListener(this);
+        manageAddress.addActionListener(this);
+        notifications.addActionListener(this);
+        about.addActionListener(this);
         home.addActionListener(this);
         browse.addActionListener(this);
         settings.addActionListener(this);
@@ -115,5 +141,18 @@ public class Settings extends JFrame implements ActionListener {
                     this.dispose();
             }
         }
+        else if (e.getSource() == changePassword) {
+            JOptionPane.showMessageDialog(this,"Change Password feature","Change Password",JOptionPane.INFORMATION_MESSAGE);
+            
+        } else if (e.getSource() == manageAddress) {
+            JOptionPane.showMessageDialog(this,"Manage your delivery addresses here.","Manage Address",JOptionPane.INFORMATION_MESSAGE);
+            
+        } else if (e.getSource() == notifications) {
+            JOptionPane.showMessageDialog(this,"Order notifications will appear here.","Notifications",JOptionPane.INFORMATION_MESSAGE);
+            
+        } else if (e.getSource() == about) {
+            JOptionPane.showMessageDialog(this,"Bai N Eat\nOnline Food Delivery System"+ "\n Beta Version 1.0","About",JOptionPane.INFORMATION_MESSAGE);
+}
+
     }
 }
