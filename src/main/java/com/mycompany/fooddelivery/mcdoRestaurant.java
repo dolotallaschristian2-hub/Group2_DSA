@@ -33,7 +33,7 @@ public class mcdoRestaurant extends JFrame implements ActionListener {
         listmodel = new DefaultListModel<>();
         list = new JList<>(listmodel);
         scroll = new JScrollPane(list);
-        scroll.setBounds(70, 120, 500, 300);
+        scroll.setBounds(70, 120, 450, 300);
         add(scroll);
         
         shows = new JButton("Show Order");

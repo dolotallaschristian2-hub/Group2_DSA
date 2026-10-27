@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class mangRestaurant extends JFrame implements ActionListener{
     private JLabel label, orders;
-    private JButton shows, menuadd;
+    private JButton shows, menuadd, delivered;
     private DefaultListModel<OrderInfo> listmodel;
     private JScrollPane scroll;
     private JList<OrderInfo> list;
@@ -34,29 +34,39 @@ public class mangRestaurant extends JFrame implements ActionListener{
         listmodel = new DefaultListModel<>();
         list = new JList<>(listmodel);
         scroll = new JScrollPane(list);
-        scroll.setBounds(70, 120, 350, 250);
+        scroll.setBounds(70, 120, 450, 300);
         add(scroll);
         
         shows = new JButton("Show Order");
-        shows.setBounds(440, 120, 120, 30);
+        shows.setBounds(70, 450, 120, 30);
         add(shows);
         
         menuadd = new JButton("Add Menu");
-        menuadd.setBounds(440, 170, 120, 30);
+        menuadd.setBounds(220, 450, 120, 30);
         add(menuadd);
+        
+        delivered = new JButton("Delivered");
+        delivered.setBounds(370, 450, 120, 30);
+        add(delivered);
         
         shows.addActionListener(this);
         menuadd.addActionListener(this);
+        delivered.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
        if(e.getSource() == shows){
+           load();
            
        }else if(e.getSource() == menuadd){
            menuaddMang m = new menuaddMang();
            m.setVisible(true);
            this.dispose();
+           
+       }else if(e.getSource() == delivered){
+           markDelivered();
+           
        }
     }
     
@@ -118,5 +128,51 @@ public class mangRestaurant extends JFrame implements ActionListener{
                     + " | " + type;
         }
     }
+     private void markDelivered() {
+        OrderInfo selected = list.getSelectedValue();
 
+        if (selected == null || selected.id == 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select an order first.");
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Mark Order #" + selected.id + " as delivered?",
+                "Confirm Delivery",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String sql = "UPDATE orders_mang SET status = 'Delivered' "
+                + "WHERE orderid = ? "
+                + "AND status <> 'Delivered'";
+
+        try (Connection c = DBConnection.getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+
+            p.setInt(1, selected.id);
+
+            int updated = p.executeUpdate();
+
+            if (updated > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "Order #" + selected.id
+                                + " has been delivered.");
+                load();
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Order was already delivered or not found.");
+                load();
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,
+                    "Unable to update order: " + ex.getMessage());
+        }
+    }
 }    

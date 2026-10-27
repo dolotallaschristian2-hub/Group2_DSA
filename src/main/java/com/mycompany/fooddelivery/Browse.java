@@ -208,7 +208,10 @@ public class Browse extends JFrame implements ActionListener{
              jolCustomer j = new jolCustomer(customerid);
              j.setVisible(true);
              this.dispose();
-         }
+             
+         }else if(e.getSource() == mang){
+             
+         }    
     }
 
 }
