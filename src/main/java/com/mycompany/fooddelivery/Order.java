@@ -144,6 +144,16 @@ public class Order extends JFrame implements ActionListener{
             mcdoCustomer cs = new mcdoCustomer(customerid);
             cs.setVisible(true);
             this.dispose();
+            
+        }else if(e.getSource() == jol){
+            jolCustomer c = new jolCustomer(customerid);
+            c.setVisible(true);
+            this.dispose();
+            
+        }else if(e.getSource() == mang){
+            mangCustomer m = new mangCustomer(customerid);
+            m.setVisible(true);
+            this.dispose();
         }
     }    
 }
