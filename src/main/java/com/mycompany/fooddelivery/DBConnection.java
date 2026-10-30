@@ -120,6 +120,18 @@ public class DBConnection {
                     type VARCHAR(20) NOT NULL DEFAULT 'NORMAL');"""
         };
         
+        try(Connection c = getConnection();
+            Statement st = c.createStatement()){
+            
+            for (String sql: tables){
+                st.executeUpdate(sql);
+            }
+            System.out.println("All table have been created");
+            
+        }catch(SQLException ex ){
+            ex.printStackTrace();
+        }
+        
         
     }
     
@@ -131,10 +143,15 @@ public class DBConnection {
        
        String insert = "INSERT IGNORE INTO users(username, password) VALUES (?, ?);";
        
-       try(Connection c = DBConnection.getConnection();
-           Statement st = c.createStatement()){
+       try(Connection c = DBConnection.getConnection();){
+           if(c == null){
+               System.out.println("Cannot created default admin. Database connection failed");
+               return;
+           }
            
+           try(Statement st = c.createStatement()){
            st.executeUpdate(Table);
+           }
            
            try(PreparedStatement ps =c.prepareStatement(insert)){
                ps.setString(1, "admin");

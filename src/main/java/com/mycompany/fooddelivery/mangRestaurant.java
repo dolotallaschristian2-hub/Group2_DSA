@@ -68,7 +68,7 @@ public class mangRestaurant extends JFrame implements ActionListener{
            load();
            
        }else if(e.getSource() == menuadd){
-           menuaddMang m = new menuaddMang();
+           menuaddMang m = new menuaddMang(customerid);
            m.setVisible(true);
            this.dispose();
            

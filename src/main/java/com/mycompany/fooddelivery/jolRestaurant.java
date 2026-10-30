@@ -67,7 +67,7 @@ public class jolRestaurant extends JFrame implements ActionListener {
             load();
             
         }else if(e.getSource() == menuadd){
-            menuaddJol j = new menuaddJol();
+            menuaddJol j = new menuaddJol(customerid);
             j.setVisible(true);
             
         }else if (e.getSource() == delivered){

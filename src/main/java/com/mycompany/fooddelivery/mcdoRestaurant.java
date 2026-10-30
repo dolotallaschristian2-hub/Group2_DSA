@@ -67,7 +67,7 @@ public class mcdoRestaurant extends JFrame implements ActionListener {
             load();
             
         }else if(e.getSource() == menuadd){
-            menuAdd a = new menuAdd();
+            menuAdd a = new menuAdd(customerid);
             a.setVisible(true);
             this.dispose();
             

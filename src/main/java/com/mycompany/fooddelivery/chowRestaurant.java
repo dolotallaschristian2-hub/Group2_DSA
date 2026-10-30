@@ -67,7 +67,7 @@ public class chowRestaurant extends JFrame implements ActionListener {
             load();
             
         }else if(e.getSource() == menuadd){
-            menuaddChow c = new menuaddChow();
+            menuaddChow c = new menuaddChow(customerid);
             c.setVisible(true);
             this.dispose();
             
