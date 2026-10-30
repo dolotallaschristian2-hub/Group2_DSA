@@ -10,6 +10,7 @@ public class FoodDelivery {
         DBConnection.CreateDatabase();
         DBConnection.Tables();
         DBConnection.defaultadmin();
+        DBConnection.Restaurantdefault();
         Connection c = DBConnection.getConnection();
 
        

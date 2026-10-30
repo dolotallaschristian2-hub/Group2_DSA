@@ -46,11 +46,6 @@ public class DBConnection {
     public static void Tables(){
         
         String tables[] = {
-                "CREATE TABLE IF NOT EXISTS restaurant_accounts("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "username VARCHAR (50) NOT NULL UNIQUE,"
-                + "password VARCHAR (255) NOT NULL);",
-                
                 "CREATE TABLE IF NOT EXISTS menu("
                 + "food_id INT NOT NULL PRIMARY KEY,"
                 + "item_name VARCHAR(100) NOT NULL,"
@@ -151,6 +146,45 @@ public class DBConnection {
            
            try(Statement st = c.createStatement()){
            st.executeUpdate(Table);
+           }
+           
+           String password = "admin123";
+           String hash = encryption.hash(password);
+           
+           try(PreparedStatement ps =c.prepareStatement(insert)){
+               ps.setString(1, "admin");
+               ps.setString(2, hash);
+               
+               int result = ps.executeUpdate();
+               
+               if(result > 0){
+                   System.out.println("Default Admin is created");
+               }else{
+                   System.out.println("Admin is alreadry exist");
+               }
+           }
+           
+       }catch(SQLException ex){
+           ex.printStackTrace();
+       }
+    }
+    
+    public static void Restaurantdefault() throws Exception{
+        String table = "CREATE TABLE IF NOT EXISTS restaurant_accounts("
+                + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                + "username VARCHAR (50) NOT NULL UNIQUE,"
+                + "password VARCHAR (255) NOT NULL);";
+        
+        String insert = "INSERT IGNORE INTO restaurant_accounts(username, password) VALUES (?, ?);";
+       
+       try(Connection c = DBConnection.getConnection();){
+           if(c == null){
+               System.out.println("Cannot created default admin. Database connection failed");
+               return;
+           }
+           
+           try(Statement st = c.createStatement()){
+           st.executeUpdate(table);
            }
            
            String password = "admin123";

@@ -105,7 +105,7 @@ public class profile extends JFrame implements ActionListener {
             this.dispose();
             
         }else if(e.getSource() == orders){
-            Order o = new Order(customerid);
+            Orderss o = new Orderss(customerid);
             o.setVisible(true);
             this.dispose();
             

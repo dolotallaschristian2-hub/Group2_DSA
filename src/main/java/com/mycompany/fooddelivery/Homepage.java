@@ -158,7 +158,7 @@ public class Homepage extends JFrame implements ActionListener  {
                     this.dispose();
                     
                 }else if(e.getSource()== orders){
-                    Order o = new Order(customerId);
+                    Orderss o = new Orderss(customerId);
                     o.setVisible(true);
                     this.dispose();
                     

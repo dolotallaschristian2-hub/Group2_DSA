@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
-public class Order extends JFrame implements ActionListener{
+public class Orderss extends JFrame implements ActionListener{
     private JLabel set;
     private JPanel side, panel;
     private JButton home, browse, orders, settings, profile, logout, mcdo, jol, mang, chow;
     private int customerid;
-    Order(int customerid){
+    Orderss(int customerid){
         setSize(600, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -119,7 +119,7 @@ public class Order extends JFrame implements ActionListener{
             this.dispose();
             
         }else if(e.getSource() == orders){
-            Order o = new Order(customerid);
+            Orderss o = new Orderss(customerid);
             o.setVisible(true);
             this.dispose();
             
@@ -154,6 +154,12 @@ public class Order extends JFrame implements ActionListener{
             mangCustomer m = new mangCustomer(customerid);
             m.setVisible(true);
             this.dispose();
+        
+        }else if(e.getSource() == chow){
+            chowCustomer c = new chowCustomer(customerid);
+            c.setVisible(true);
+            this.dispose();
         }
+       
     }    
 }

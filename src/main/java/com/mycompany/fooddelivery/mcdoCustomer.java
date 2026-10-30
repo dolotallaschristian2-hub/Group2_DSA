@@ -22,7 +22,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
     private JTextArea address;
     private double cartTotal = 0;
     private int orderCounter = 1;
-    private JButton addBtn, normalBtn, priorityBtn, trackbtn;
+    private JButton addBtn, normalBtn, priorityBtn, trackbtn, back;
     private ArrayList<String> cartItems;
     private JScrollPane cartScroll, menuScroll, addressScroll, queueScroll;
     private Queue<Order> normalQueue = new LinkedList<>();
@@ -157,8 +157,11 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         // Delivery buttons
         normalBtn = new JButton("Normal Delivery");
         normalBtn.setBounds(20, 475, 180, 30);
-       
         add(normalBtn);
+        
+        back = new JButton("<-----");
+        back.setBounds(20, 0, 80, 20);
+        add(back);
 
         priorityBtn = new JButton("Priority Delivery");
         priorityBtn.setBounds(215, 475, 180, 30);
@@ -187,6 +190,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         addBtn.addActionListener(this);
         normalBtn.addActionListener(e -> placeOrder(false));
         priorityBtn.addActionListener(e -> placeOrder(true));
+        back.addActionListener(this);
     }
 
     @Override
@@ -238,6 +242,11 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         }
         else if(e.getSource() == trackbtn){
             trackMyOrder();
+            
+        }else if(e.getSource() == back){
+           Orderss r = new Orderss(customerid);
+           r.setVisible(true);
+           this.dispose();
         }
     }
 

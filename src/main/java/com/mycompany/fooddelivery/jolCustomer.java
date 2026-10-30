@@ -20,7 +20,7 @@ public class jolCustomer extends JFrame implements ActionListener {
     private JTextArea address;
     private double cartTotal = 0;
     private int orderCounter = 1;
-    private JButton addBtn, normalBtn, priorityBtn, trackbtn;
+    private JButton addBtn, normalBtn, priorityBtn, trackbtn ,back;
     private ArrayList<String> cartItems;
     private JScrollPane cartScroll, menuScroll, addressScroll, queueScroll;
     private Queue<Order> normalQueue = new LinkedList<>();
@@ -105,6 +105,10 @@ public class jolCustomer extends JFrame implements ActionListener {
         addBtn = new JButton("Add to Cart");
         addBtn.setBounds(210, 205, 130, 30);
         add(addBtn);
+        
+        back = new JButton("<-----");
+        back.setBounds(20, 0, 80, 20);
+        add(back);
 
         cartItems = new ArrayList<>();
         cartArea = new JTextArea();
@@ -179,6 +183,7 @@ public class jolCustomer extends JFrame implements ActionListener {
         addBtn.addActionListener(this);
         normalBtn.addActionListener(e -> placeOrder(false));
         priorityBtn.addActionListener(e -> placeOrder(true));
+        back.addActionListener(this);
     }
 
     @Override
@@ -230,6 +235,11 @@ public class jolCustomer extends JFrame implements ActionListener {
         }
         else if(e.getSource() == trackbtn){
             trackMyOrder();
+            
+        }else if(e.getSource() == back){
+            Orderss r = new Orderss(customerid);
+            r.setVisible(true);
+            this.dispose();
         }
     }
 
