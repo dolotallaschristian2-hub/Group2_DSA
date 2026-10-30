@@ -24,7 +24,6 @@ public class Restaurant extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
         
-        CreateTable();
         this.customerid = customerid;
         
         panel = new JPanel();
@@ -138,25 +137,5 @@ public class Restaurant extends JFrame implements ActionListener {
             this.dispose();
         }
     
-    }
-    
-    public static void CreateTable(){
-        String sql = "CREATE TABLE IF NOT EXISTS restaurant_accounts("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "username VARCHAR (50) NOT NULL UNIQUE,"
-                + "password VARCHAR (255) NOT NULL);";
-        try{
-            Connection c = DBConnection.getConnection();
-            PreparedStatement p = c.prepareStatement(sql);
-            
-            p.executeUpdate();
-            System.out.println("Table is Ready");
-            
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Unable to Create Table " + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-    }
-    
-    }
-    
+    }    
 }

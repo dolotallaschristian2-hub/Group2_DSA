@@ -72,8 +72,6 @@ public class chowCustomer extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
-        CreateTable();
-
         this.customerid = customerid;
 
         
@@ -357,30 +355,7 @@ public class chowCustomer extends JFrame implements ActionListener {
     }
     
     
-    public static void CreateTable(){
-        String sql = """
-                    CREATE TABLE IF NOT EXISTS orders_chow (
-                        orderid INT AUTO_INCREMENT PRIMARY KEY,
-                        customerid INT NOT NULL,
-                        items TEXT NOT NULL,
-                        address VARCHAR(255) NOT NULL,
-                        total DECIMAL(10, 2) NOT NULL,
-                        status VARCHAR(30) DEFAULT 'Pending',
-                        type VARCHAR(20) NOT NULL DEFAULT 'NORMAL'
-                        );""";
     
-    try{
-            Connection c = DBConnection.getConnection();
-            PreparedStatement p = c.prepareStatement(sql);
-            
-            p.executeUpdate();
-            System.out.println("Table is Ready");
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Unable to Create Table" + ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        }
-    
-    }
      private void trackMyOrder() {
         
         String input = JOptionPane.showInputDialog(this,"Enter your Order ID:");

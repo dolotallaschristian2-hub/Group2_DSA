@@ -26,7 +26,7 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         setResizable(false);
         setLocationRelativeTo(null);
         
-        Createtable();
+        
         this.customerid = customerid;
         
         panel = new JPanel();
@@ -179,25 +179,5 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
             fp.setVisible(true);
             this.dispose();
        }
-    }
-    
-    public static void Createtable(){
-        String sql = "CREATE TABLE IF NOT EXISTS users ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "username VARCHAR (50) NOT NULL UNIQUE,"
-                + "password VARCHAR (255) NOT NULL);";
-        
-        try{
-            Connection c = DBConnection.getConnection();
-            PreparedStatement p = c.prepareStatement(sql);
-            
-            p.executeUpdate();
-            System.out.println("Table is Created");
-            
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Unable to create table: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        } 
-        
     }
 }
