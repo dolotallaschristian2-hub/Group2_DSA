@@ -55,22 +55,22 @@ public class RestaurantHome extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
             if(e.getSource() == mcd){
-                mcdoRestaurant re = new mcdoRestaurant();
+                mcdoRestaurant re = new mcdoRestaurant(customerid);
                 re.setVisible(true);
                 this.dispose();
                 
             }else if(e.getSource() == chow){
-                chowRestaurant r = new chowRestaurant();
+                chowRestaurant r = new chowRestaurant(customerid);
                 r.setVisible(true);
                 this.dispose();
                 
             }else if(e.getSource() == mang){
-                mangRestaurant m = new mangRestaurant();
+                mangRestaurant m = new mangRestaurant(customerid);
                 m.setVisible(true);
                 this.dispose();
                 
             }else if(e.getSource() == jol){
-                jolRestaurant r = new jolRestaurant();
+                jolRestaurant r = new jolRestaurant(customerid);
                 r.setVisible(true);
                 this.dispose();
                 

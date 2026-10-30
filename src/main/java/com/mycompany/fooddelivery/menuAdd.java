@@ -11,14 +11,17 @@ public class menuAdd extends JFrame implements ActionListener{
     private JLabel title, rest, name,desc, price;
     private JTextField resID, restname, descrp, prices;
     private JButton save, clear, back;
+    private int customerid;
     
-    menuAdd(){
+    menuAdd(int customerid){
         setTitle("Menu Add Item ");
         setSize(600, 600);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
+        
+        this.customerid = customerid;
         
         title = new JLabel("Add Menu Item",SwingConstants.CENTER);
         title.setFont(new Font("Arial",Font.BOLD, 14));
@@ -133,7 +136,7 @@ public class menuAdd extends JFrame implements ActionListener{
                 prices.setText("");
                 
             } else if(e.getSource() == back){
-                mcdoRestaurant r = new mcdoRestaurant();
+                mcdoRestaurant r = new mcdoRestaurant(customerid);
                 r.setVisible(true);
                 this.dispose();
         }

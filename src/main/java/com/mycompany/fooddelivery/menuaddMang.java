@@ -13,8 +13,9 @@ public class menuaddMang extends JFrame implements ActionListener{
     private JLabel title, rest, name,desc, price;
     private JTextField resID, restname, descrp, prices;
     private JButton save, clear, back;
+    private int customerid;
     
-    menuaddMang(){
+    menuaddMang(int customerid){
         setTitle("Menu Add Item ");
         setSize(600, 600);
         setLayout(null);
@@ -136,7 +137,7 @@ public class menuaddMang extends JFrame implements ActionListener{
                 descrp.setText("");
                 prices.setText("");
         } else if(e.getSource() == back){
-                mangRestaurant r = new mangRestaurant();
+                mangRestaurant r = new mangRestaurant(customerid);
                 r.setVisible(true);
                 this.dispose();
         }

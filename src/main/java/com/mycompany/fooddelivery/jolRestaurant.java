@@ -9,17 +9,20 @@ import javax.swing.*;
 
 public class jolRestaurant extends JFrame implements ActionListener {
     private JLabel label, orders;
-    private JButton shows, menuadd, delivered;
+    private JButton shows, menuadd, delivered, back;
     private DefaultListModel<OrderInfo> listmodel;
     private JScrollPane scroll;
     private JList<OrderInfo> list;
+    private int customerid;
     
-    jolRestaurant(){
+    jolRestaurant(int customerid){
         setSize(600, 600);
         setLayout(null);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         label = new JLabel("Welcome, JOLLIBEE", SwingConstants.CENTER);
         label.setBounds(200, 30, 200, 30);
@@ -48,9 +51,14 @@ public class jolRestaurant extends JFrame implements ActionListener {
         delivered.setBounds(370, 450, 120, 30);
         add(delivered);
         
+        back = new JButton("<-----");
+        back.setBounds(20, 10, 80, 30);
+        add(back);
+        
         shows.addActionListener(this);
         menuadd.addActionListener(this);
         delivered.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
@@ -64,6 +72,11 @@ public class jolRestaurant extends JFrame implements ActionListener {
             
         }else if (e.getSource() == delivered){
             markDelivered();
+            
+        }else if (e.getSource() == back){
+            RestaurantHome r = new RestaurantHome(customerid);
+            r.setVisible(true);
+            this.dispose();
         }
     }
     private void load(){

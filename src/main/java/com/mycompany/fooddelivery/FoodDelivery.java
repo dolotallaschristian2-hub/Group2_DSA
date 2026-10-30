@@ -6,6 +6,9 @@ public class FoodDelivery {
 
     public static void main(String[] args) {
         
+        DBConnection.CreateDatabase();
+        DBConnection.Tables();
+        DBConnection.defaultadmin();
         
         int customerid = 1;
         Choices cs = new Choices(customerid);
