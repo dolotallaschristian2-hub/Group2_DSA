@@ -135,7 +135,7 @@ public class DBConnection {
         
     }
     
-    public static void defaultadmin(){
+    public static void defaultadmin() throws Exception{
        String Table = "CREATE TABLE IF NOT EXISTS users ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "username VARCHAR (50) NOT NULL UNIQUE,"
@@ -153,9 +153,12 @@ public class DBConnection {
            st.executeUpdate(Table);
            }
            
+           String password = "admin123";
+           String hash = encryption.hash(password);
+           
            try(PreparedStatement ps =c.prepareStatement(insert)){
                ps.setString(1, "admin");
-               ps.setString(2, "admin123");
+               ps.setString(2, hash);
                
                int result = ps.executeUpdate();
                
