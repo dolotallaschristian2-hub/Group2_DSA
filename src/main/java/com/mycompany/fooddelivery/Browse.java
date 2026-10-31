@@ -210,7 +210,9 @@ public class Browse extends JFrame implements ActionListener{
              this.dispose();
              
          }else if(e.getSource() == mang){
-             
+             mangCustomer m = new mangCustomer(customerid);
+             m.setVisible(true);
+             this.dispose();
          }    
     }
 
