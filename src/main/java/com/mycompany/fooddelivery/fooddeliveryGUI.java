@@ -7,28 +7,30 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 public class fooddeliveryGUI extends JFrame implements ActionListener {
     
     private JLabel lblheader, username, password, remind;
-    private JButton btnlogin, btnregister;
+    private JButton btnlogin, btnregister, back, fpass;
     private JTextArea txauser;
     private JPasswordField jpfpass;
-    private JScrollPane error;
     private JPanel panel;
+    private int customerid;
     
-    
-    fooddeliveryGUI(){
+    fooddeliveryGUI(int customerid){
         setSize(600, 700);
-        setTitle("Food Delivery");
+        setTitle("Bai N Eat");
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
-       
+        
+        
+        this.customerid = customerid;
+        
         panel = new JPanel();
-        panel.setBounds(30, 100, 520, 500);
+        panel.setBounds(30, 80, 520, 500);
         panel.setBackground(Color.gray);
         panel.setLayout(null);
         add(panel);
@@ -69,75 +71,113 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         panel.add(btnlogin);
         
         btnregister = new JButton("Register");
-        btnregister.setBounds(230, 380, 100, 40);
+        btnregister.setBounds(230, 360, 100, 40);
         btnregister.setBackground(new Color(150, 70, 80));
         panel.add(btnregister);
         
+        fpass = new JButton("Forget Password");
+        fpass.setBounds(200, 420, 140, 30);
+        panel.add(fpass);
+        
+        back = new JButton("<-----");
+        back.setBounds(20, 10, 80, 40);
+        add(back);
         
         
         
        btnlogin.addActionListener(this);
-       btnregister.addActionListener(this);        
+       btnregister.addActionListener(this); 
+       back.addActionListener(this);
+       fpass.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-       if(e.getSource() == btnlogin){
-         
-           String username = txauser.getText().trim();
-           String password = new String (jpfpass.getPassword());
-       
-           
-           if(username.isEmpty()){
-               JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
-           }
-           else if(password.isEmpty()){
-               JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
-           }
-           else{ 
-               String sql = "SELECT * FROM users WHERE username = ?";
-               try{
-                   Connection con = DBConnection.getConnection();
-                   
-                   PreparedStatement pet = con.prepareStatement(sql);
-                   
-                   pet.setString(1, username);
-                   ResultSet res = pet.executeQuery();
-                   
-                   if(res.next()){
-                       String hash = res.getString("password");
-                       
-                       if(hash != null && (hash.startsWith("$2a$")|| hash.startsWith("$2b$")|| hash.startsWith("$2y$"))){
-                           if (BCrypt.checkpw(password, hash)){
-                           JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
-                           }  
-                           Homepage home = new Homepage();
-                           home.setVisible(true);
-                           this.dispose();
-                       }else{
-                           JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                       }    
-                        
-                   }
-                   else{
-                     JOptionPane.showMessageDialog(this, "Invalid Username or Password", "Error", JOptionPane.ERROR_MESSAGE);
-                   }
-                   
-                   res.close();
-                   pet.close();
-                   con.close();
-                       
-               }catch(SQLException ex){
-                 JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
-                 
-                 ex.printStackTrace();
-           }   
+        if (e.getSource() == btnlogin) {
+
+    String username = txauser.getText().trim();
+    String password = new String(jpfpass.getPassword());
+
+            if (username.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Enter the Username", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please Check the Password", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            else {
+                String sql = "SELECT * FROM users WHERE BINARY username = ?";
+
+                try {
+                    Connection con = DBConnection.getConnection();
+                    PreparedStatement pet = con.prepareStatement(sql);
+
+                    pet.setString(1, username);
+
+                    ResultSet res = pet.executeQuery();
+
+            // Check whether the username exists
+                if (res.next()) {
+                    String hash = res.getString("password");
+
+                    if (hash != null && !hash.isEmpty()) {
+
+                    try {
+                        // Verify the password
+                        if (encryption.Password(password, hash)) {
+                            
+                            int customerid = res.getInt("id");
+                            
+                            JOptionPane.showMessageDialog(this, "Login Successful", "Login", JOptionPane.INFORMATION_MESSAGE);
+
+                            Homepage home = new Homepage(customerid);
+                            home.setVisible(true);
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
+                        } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Password verification error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        ex.printStackTrace();
+                    }
+
+                    } else {
+                    JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } else {
+                // IMPORTANT: Username was not found in the database
+                JOptionPane.showMessageDialog(this, "Invalid Username or Password","Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            res.close();
+            pet.close();
+            con.close();
+
+                }catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
         }
-    }
+
        else if(e.getSource() == btnregister){
-           register reg = new register();
+//           Goes to the register class
+           register reg = new register(customerid);
            reg.setVisible(true);
            this.dispose();
+       }
+       else if (e.getSource() == back){
+//           Goes to the choices class
+            Choices cs = new Choices(customerid);
+            cs.setVisible(true);
+            this.dispose();
+        }
+       else if (e.getSource() == fpass){
+//           Goes to the forgetPass class
+            forgetPass fp = new forgetPass(customerid);
+            fp.setVisible(true);
+            this.dispose();
        }
     }
 }
