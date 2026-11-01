@@ -9,14 +9,17 @@ public class Choices extends JFrame implements ActionListener{
     private JPanel pane;
     private JLabel label;
     private JButton resto, custo, back;
+    private int customerid;
     
-    Choices(){
+    Choices(int customerid){
         setSize(500, 500);
         setTitle("Please Select");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         pane = new JPanel();
         pane.setBounds(100, 100, 300, 300);
@@ -45,12 +48,12 @@ public class Choices extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == resto){
-            Restaurant rm = new Restaurant();
+            Restaurant rm = new Restaurant(customerid);
             rm.setVisible(true);
             this.dispose();
         }
         else if(e.getSource() == custo){
-            fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
+            fooddeliveryGUI fooddelivery = new fooddeliveryGUI(customerid);
             fooddelivery.setVisible(true);
             this.dispose();
         }

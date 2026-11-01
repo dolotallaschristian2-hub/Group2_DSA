@@ -7,23 +7,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.*;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 public class forgetPass extends JFrame implements ActionListener {
     
     private JLabel label, usir, paswurd;
     private JTextField user;
     private JPasswordField pass;
-    private JButton upd;
+    private JButton upd, back;
     private JPanel panel;
+    private int customerid;
     
-    forgetPass(){
+    forgetPass(int customerid){
         setSize(500, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setTitle("Forget Password");
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         panel = new JPanel();
         panel.setBounds(50, 50, 400, 400);
@@ -54,7 +57,12 @@ public class forgetPass extends JFrame implements ActionListener {
         upd.setBounds(140, 170, 140, 40);
         panel.add(upd);
         
+        back = new JButton ("<----");
+        back.setBounds(20, 10, 80, 40);
+        add(back);
+        
         upd.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
@@ -81,7 +89,7 @@ public class forgetPass extends JFrame implements ActionListener {
                 ResultSet outcome = search.executeQuery();
                 
                 if(outcome.next()){
-                    String hash = BCrypt.hashpw(word, BCrypt.gensalt(12));
+                    String hash = encryption.hash(word);
                     
                 String update = "UPDATE users SET password = ? WHERE username = ?";
                 
@@ -100,7 +108,7 @@ public class forgetPass extends JFrame implements ActionListener {
                     cv.close();
                     search.close();
                     
-                    fooddeliveryGUI fd = new fooddeliveryGUI();
+                    fooddeliveryGUI fd = new fooddeliveryGUI(customerid);
                     fd.setVisible(true);
                     this.dispose();
                 }
@@ -108,8 +116,14 @@ public class forgetPass extends JFrame implements ActionListener {
             }catch(SQLException ex){
                 JOptionPane.showMessageDialog(this, "Database has an error" + ex, "Error", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
-            }
-            
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Encryption has an error" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+            }  
+        }
+        else if(e.getSource() == back){
+            fooddeliveryGUI fd = new fooddeliveryGUI(customerid);
+            fd.setVisible(true);
+            this.dispose();
         }
     }
     

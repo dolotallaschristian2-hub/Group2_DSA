@@ -7,24 +7,26 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import org.mindrot.jbcrypt.BCrypt;
+
 
 public class register extends JFrame implements ActionListener{
     private JLabel username, password, again;
     private JTextField user;
     private JPasswordField pass, confirm;
-    private JButton create;
+    private JButton create, back;
     private JPanel panel;
-            
+    private int customerid;       
     
     
-    public register(){
+    public register(int customerid){
         setTitle("Registration");
         setSize(600, 600);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        
+        this.customerid = customerid;
         
         panel = new JPanel();
         panel.setBounds(120, 120, 360, 250);
@@ -65,28 +67,39 @@ public class register extends JFrame implements ActionListener{
         create.setBounds(100, 170, 160, 45);
         panel.add(create);
         
-       create.addActionListener(this);
+        back = new JButton("<----");
+        back.setBounds(20, 10, 80, 40);
+        add(back);
+        
+        create.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == create){
-            String username = new String (user.getText());
+//            Create Account button 
+            String username =user.getText().trim();
             String word = new String (pass.getPassword());
             String agains = new String (confirm.getPassword());
             
             if (username.isEmpty()){
+//                Error occurs if the user did not enter any username at all
                 JOptionPane.showMessageDialog(this, "Please Enter Username", "Error", JOptionPane.ERROR_MESSAGE); 
                 return;
             }
             else if(word.isEmpty()){
-                JOptionPane.showMessageDialog(this, "Plase enter password", "Error", JOptionPane.ERROR_MESSAGE);
+//                Error occurs if the user did not enter password after they enter the username
+                JOptionPane.showMessageDialog(this, "Please enter password", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }else if (!word.equals(agains)){
-                JOptionPane.showMessageDialog(this, "Plase check your password", "Error", JOptionPane.ERROR_MESSAGE);
+//                This would occur if they first password did not match the second password
+                JOptionPane.showMessageDialog(this, "Please check your password", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }   
-                String hashp = BCrypt.hashpw(word, BCrypt.gensalt(10));
+            try{
+//                Hashing the password they created in database
+                String hashp = encryption.hash(word);
                 String sql = "INSERT INTO logindb.users SET username = ?, password =  ?";
                 try(Connection cn = DBConnection.getConnection()){
                    PreparedStatement st = cn.prepareStatement(sql);
@@ -96,20 +109,27 @@ public class register extends JFrame implements ActionListener{
                    
                    int result = st.executeUpdate();
                    System.out.println("Rows Inserted " + result);
-                    
+//                   This would occur if they are successfully give the neccessary requirements 
                    JOptionPane.showMessageDialog(this, "Account is Created", "Account", JOptionPane.INFORMATION_MESSAGE);
                 
-                fooddeliveryGUI fooddelivery = new fooddeliveryGUI();
+                fooddeliveryGUI fooddelivery = new fooddeliveryGUI(customerid);
                 fooddelivery.setVisible (true);
                 this.dispose();
-                
+                }
                 
                 }catch (SQLException ex){
                     JOptionPane.showMessageDialog(this, "Database Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                ex.printStackTrace();
-                }
-                
             }
+                catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Encryption has an Error" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else if(e.getSource() == back){
+//            Going back to the login page
+            fooddeliveryGUI fd = new fooddeliveryGUI(customerid);
+            fd.setVisible(true);
+            this.dispose();
+        }
         }
     }
 
