@@ -40,7 +40,7 @@ public class RestaurantHome extends JFrame implements ActionListener{
             jol.setBounds(350, 230, 170, 40);
             add(jol);
             
-            logout = new JButton("Logut");
+            logout = new JButton("Log Out");
             logout.setBounds(500, 10, 80, 40);
             add(logout);
             
