@@ -134,8 +134,9 @@ public class menuaddChow extends JFrame implements ActionListener{
                 restname.setText("");
                 descrp.setText("");
                 prices.setText("");
+                
         }else if(e.getSource() == back){
-                mangRestaurant r = new mangRestaurant(customerid);
+                chowRestaurant r = new chowRestaurant(customerid);
                 r.setVisible(true);
                 this.dispose();
         }        

@@ -73,6 +73,7 @@ public class menuaddJol extends JFrame implements ActionListener{
         add(back);
         
         save.addActionListener(this);
+        back.addActionListener(this);
     }
 
     @Override
@@ -135,7 +136,7 @@ public class menuaddJol extends JFrame implements ActionListener{
                 descrp.setText("");
                 prices.setText("");
         } else if(e.getSource() == back){
-                mangRestaurant r = new mangRestaurant(customerid);
+                jolRestaurant r = new jolRestaurant(customerid);
                 r.setVisible(true);
                 this.dispose();
         }
