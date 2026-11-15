@@ -3,6 +3,7 @@ package com.mycompany.fooddelivery;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 import javax.swing.*;
 
 public class MapClass extends JFrame implements ActionListener {
@@ -10,7 +11,7 @@ public class MapClass extends JFrame implements ActionListener {
     private JLabel lblTitle;
     private JLabel lblStart;
     private JLabel lblDestination;
-
+    private route deliveryroute;
     private JComboBox<String> startComboBox;
     private JComboBox<String> destinationComboBox;
 
@@ -52,6 +53,7 @@ public class MapClass extends JFrame implements ActionListener {
         lblDestination.setBounds(30, 150, 150, 30);
         add(lblDestination);
 
+        deliveryroute = new route();
         destinationComboBox = new JComboBox<>();
 
         destinationComboBox.addItem("Loc1");
@@ -67,9 +69,7 @@ public class MapClass extends JFrame implements ActionListener {
         btnFindRoute = new JButton("FIND DELIVERY ROUTE");
         btnFindRoute.setBounds(100, 230, 200, 40);
         add(btnFindRoute);
-
-        btnFindRoute.addActionListener(this);
-
+        
         // Result Area
         txtResult = new JTextArea();
         txtResult.setEditable(false);
@@ -77,6 +77,9 @@ public class MapClass extends JFrame implements ActionListener {
         scrollPane = new JScrollPane(txtResult);
         scrollPane.setBounds(30, 290, 330, 100);
         add(scrollPane);
+        
+        btnFindRoute.addActionListener(this);
+        
     }
 
     @Override
@@ -85,7 +88,20 @@ public class MapClass extends JFrame implements ActionListener {
         if (e.getSource() == btnFindRoute) {
 
             // Route code vv
-
+            String start = (String)startComboBox.getSelectedItem();
+            String destination = (String)destinationComboBox.getSelectedItem();
+            
+                if(start.equals(destination)){
+                    txtResult.setText("You are already in the Destination");
+                    return;
+                }
+                LinkedList <String> shortestpath = deliveryroute.Shortestroute(start, destination);
+                
+                    if(shortestpath == null){
+                        txtResult.setText("No available delivery route");
+                    }else{
+                        txtResult.setText("Shortest Delivery Route: \n" + String.join(" -> ", shortestpath));
+                    }
         }
     }
 

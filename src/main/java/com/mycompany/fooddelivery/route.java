@@ -28,10 +28,10 @@ public class route {
         
     }
     
-    public void Shortestroute(String start, String destination){
+    public LinkedList <String> Shortestroute(String start, String destination){
         if(!graph.containsKey(start)|| !graph.containsKey(destination)){
             System.out.println("Location Not Found");
-            return;
+            return null;
         }
         
         Map<String, Double> distances = new HashMap<>();
@@ -65,7 +65,7 @@ public class route {
         }
         if(distances.get(destination) == Double.MAX_VALUE){
             System.out.println("No Available Route");
-            return;
+           
         }
          LinkedList<String> path = new LinkedList<>();
 
@@ -80,7 +80,9 @@ public class route {
         System.out.println(
             "Total Distance: " +
             distances.get(destination) + " km"
+                
         );
+        return path;
     
     }
 }
