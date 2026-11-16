@@ -1,109 +1,135 @@
-
 package com.mycompany.fooddelivery;
-
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
 import javax.swing.*;
 
-public class MapClass extends JFrame implements ActionListener {
-
-    private JLabel lblTitle;
-    private JLabel lblStart;
-    private JLabel lblDestination;
-    private route deliveryroute;
-    private JComboBox<String> startComboBox;
-    private JComboBox<String> destinationComboBox;
-
-    private JButton btnFindRoute;
-
-    private JTextArea txtResult;
-    private JScrollPane scrollPane;
-
-    MapClass() {
-
-        setTitle("Delivery Route System");
-        setSize(400, 450);
+public class MapClass extends JFrame implements ActionListener{
+    private final int customerId;
+    private final String resName = "McDonald's Biñan Bayan";
+    private final String resLoc = "35 A Bonifacio Street, Brgy. Poblacion";
+    private JLabel title, name, add;
+    private JButton con;
+    
+    
+    MapClass(int customerId){
+        this.customerId = customerId;
+        
+        setTitle("Bai N Eat - Restaurant Location");
+        setSize(600, 600);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Title
-        lblTitle = new JLabel("DELIVERY ROUTE SYSTEM");
-        lblTitle.setBounds(120, 20, 200, 30);
-        add(lblTitle);
-
-        // Starting Loc
-        lblStart = new JLabel("Starting Location:");
-        lblStart.setBounds(30, 70, 150, 30);
-        add(lblStart);
-
-        startComboBox = new JComboBox<>();
-
-        startComboBox.addItem("Loc1");
-        startComboBox.addItem("Loc2");
-        startComboBox.addItem("Loc3");
-        startComboBox.addItem("Loc4");
-        startComboBox.addItem("Loc5");
-
-        startComboBox.setBounds(30, 100, 150, 30);
-        add(startComboBox);
-
-        // Customer
-        lblDestination = new JLabel("Customer Location:");
-        lblDestination.setBounds(30, 150, 150, 30);
-        add(lblDestination);
-
-        deliveryroute = new route();
-        destinationComboBox = new JComboBox<>();
-
-        destinationComboBox.addItem("Loc1");
-        destinationComboBox.addItem("Loc2");
-        destinationComboBox.addItem("Loc3");
-        destinationComboBox.addItem("Loc4");
-        destinationComboBox.addItem("Loc5");
-
-        destinationComboBox.setBounds(30, 180, 150, 30);
-        add(destinationComboBox);
-
-        // Find
-        btnFindRoute = new JButton("FIND DELIVERY ROUTE");
-        btnFindRoute.setBounds(100, 230, 200, 40);
-        add(btnFindRoute);
+        setResizable(false);
         
-        // Result Area
-        txtResult = new JTextArea();
-        txtResult.setEditable(false);
-
-        scrollPane = new JScrollPane(txtResult);
-        scrollPane.setBounds(30, 290, 330, 100);
-        add(scrollPane);
+        title = new JLabel("Restaurant Location");
+        title.setBounds(30, 20, 400, 35);
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+        add(title);
         
-        btnFindRoute.addActionListener(this);
+        name = new JLabel(resName);
+        name.setBounds(30, 65, 500, 30);
+        name.setFont(new Font("Arial", Font.PLAIN, 13));
+        add(name);
+        
+        add = new JLabel(resLoc);
+        add.setFont(new Font("Arial", Font.PLAIN, 13));
+        add.setBounds(30, 100, 530, 25);
+        add(add);
+        
+        MapPanel mapPanel = new MapPanel();
+        mapPanel.setBounds(30, 140, 520, 280);
+        add(mapPanel);
+        
+        con = new JButton("Continue to Menu");
+        con.setBounds(180, 440, 220, 40);
+        add(con);
+        
+        con.addActionListener(this);
+        
         
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource() == btnFindRoute) {
-
-            // Route code vv
-            String start = (String)startComboBox.getSelectedItem();
-            String destination = (String)destinationComboBox.getSelectedItem();
-            
-                if(start.equals(destination)){
-                    txtResult.setText("You are already in the Destination");
-                    return;
-                }
-                LinkedList <String> shortestpath = deliveryroute.Shortestroute(start, destination);
-                
-                    if(shortestpath == null){
-                        txtResult.setText("No available delivery route");
-                    }else{
-                        txtResult.setText("Shortest Delivery Route: \n" + String.join(" -> ", shortestpath));
-                    }
+        if(e.getSource() == con){
+            mcdoCustomer m = new mcdoCustomer(customerId);
+            m.setVisible(true);
+            this.dispose();
         }
     }
+    
+    public class MapPanel extends JPanel{
+        MapPanel(){
+            setBackground(new Color(235, 240, 230));
+            setBorder(BorderFactory.createLineBorder(Color.gray));
+        }
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
 
+            Graphics2D g2 = (Graphics2D) g.create();
+
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+
+            int width = getWidth();
+            int height = getHeight();
+
+       
+            g2.setColor(new Color(225, 235, 215));
+            g2.fillRect(0, 0, width, height);
+
+            // Roads
+            g2.setColor(Color.WHITE);
+            g2.setStroke(new BasicStroke(35));
+            g2.drawLine(0, height / 2, width, height / 2);
+            g2.drawLine(width / 2, 0, width / 2, height);
+
+            // Road Borders
+            g2.setColor(new Color(180, 180, 180));
+            g2.setStroke(new BasicStroke(1));
+
+            g2.drawLine(0, height / 2 - 18,
+                    width, height / 2 - 18);
+
+            g2.drawLine(0, height / 2 + 18,
+                    width, height / 2 + 18);
+
+            g2.drawLine(width / 2 - 18, 0,
+                    width / 2 - 18, height);
+
+            g2.drawLine(width / 2 + 18, 0,
+                    width / 2 + 18, height);
+
+            // Road Names
+            g2.setColor(Color.DARK_GRAY);
+            g2.setFont(new Font("Arial", Font.BOLD, 13));
+
+            g2.drawString("Brgy. Poblacion", 20, height / 2 - 25);
+
+            g2.drawString("35 A Bonifacio Street",
+                    width / 2 + 25, 30);
+
+            // Restaurant Marker
+            int markerX = width / 2 + 45;
+            int markerY = height / 2 + 45;
+
+            g2.setColor(Color.RED);
+            g2.fillOval(markerX, markerY, 25, 25);
+
+            g2.setColor(Color.WHITE);
+            g2.fillOval(markerX + 7, markerY + 7, 11, 11);
+
+            // Restaurant Label
+            g2.setColor(Color.BLACK);
+            g2.setFont(new Font("Arial", Font.BOLD, 14));
+
+            g2.drawString("McDonald's",
+                    markerX + 30, markerY + 12);
+
+            g2.dispose();
+        }
+    }
+    
     
 }
+

@@ -407,7 +407,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
                     );
 
                     // Open Mapclass after finding the order
-                    MapClass map = new MapClass();
+                    MapClass map = new MapClass(customerid);
                     map.setVisible(true);
 
                 } else {
