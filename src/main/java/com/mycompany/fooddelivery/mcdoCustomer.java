@@ -242,6 +242,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         }
         else if(e.getSource() == trackbtn){
             trackMyOrder();
+            this.dispose();
             
         }else if(e.getSource() == back){
            Orderss r = new Orderss(customerid);
