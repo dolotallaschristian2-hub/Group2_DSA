@@ -3,29 +3,57 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.util.*;
 
 public class MapClass extends JFrame implements ActionListener{
     private final int customerId;
     private final String resName = "McDonald's Biñan Bayan";
     private final String resLoc = "35 A Bonifacio Street, Brgy. Poblacion";
-    private JLabel title, name, add;
-    private JButton con;
-    
+    private JLabel title, name, add, custt;
+    private JButton con, route;
+    private route deliveryRoute;
+    private JComboBox<String> loc;
+    private JTextArea text;
+    private JScrollPane sc;
     
     MapClass(int customerId){
         this.customerId = customerId;
         
         setTitle("Bai N Eat - Restaurant Location");
-        setSize(600, 600);
+        setSize(600, 650);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
         setResizable(false);
         
+        deliveryRoute = new route();
+        
+        deliveryRoute.addRoad(resName, "Biñan Plaza" , 1.0);
+        deliveryRoute.addRoad("Biñan Plaza", "Biñan City Hall", 1.5);
+        deliveryRoute.addRoad(resName, "Biñan City Hall", 2.0);
+        deliveryRoute.addRoad("Biñan City Hall", "Customer Location A", 1.5);
+        deliveryRoute.addRoad("Biñan Plaza", "Customer Location A", 2.0);
+        deliveryRoute.addRoad(resName, "PUP Biñan- CITE", 2.5);
+        
+        loc = new JComboBox<>();
+        
+        loc.addItem("Biñan Plaza");
+        loc.addItem("Biñan City Hall");
+        loc.addItem("PUP Biñan- CITE");
+        loc.addItem("Customer Location A");
+        
+        loc.setBounds(180, 430, 200, 25);
+        add(loc);
+        
+        
         title = new JLabel("Restaurant Location");
         title.setBounds(30, 20, 400, 35);
         title.setFont(new Font("Arial", Font.BOLD, 20));
         add(title);
+        
+        custt = new JLabel("Customer Location");
+        custt.setBounds(30, 430, 150, 25);
+        add(custt);
         
         name = new JLabel(resName);
         name.setBounds(30, 65, 500, 30);
@@ -42,9 +70,20 @@ public class MapClass extends JFrame implements ActionListener{
         add(mapPanel);
         
         con = new JButton("Continue to Menu");
-        con.setBounds(180, 440, 220, 40);
+        con.setBounds(250, 465, 200, 35);
         add(con);
         
+        route = new JButton("Find Shortest Route");
+        route.setBounds(30, 465, 200, 35);
+        add(route);
+        
+        text = new JTextArea();
+        text.setEditable(false);
+        sc = new JScrollPane(text);
+        sc.setBounds(30, 510, 520, 50);
+        add(sc);
+
+        route.addActionListener(this);
         con.addActionListener(this);
         
         
@@ -56,6 +95,16 @@ public class MapClass extends JFrame implements ActionListener{
             mcdoCustomer m = new mcdoCustomer(customerId);
             m.setVisible(true);
             this.dispose();
+        }else if(e.getSource() == route){
+            String start = resName;
+            String destination = (String)loc.getSelectedItem();
+            LinkedList<String> shortestPath = deliveryRoute.Shortestroute(start, destination);
+            
+            if(shortestPath == null){
+                text.setText("No Available Route");
+            }else {
+                text.setText("Shortest Delivery Route: \n" + String.join("--->", shortestPath));
+            }
         }
     }
     
@@ -64,6 +113,7 @@ public class MapClass extends JFrame implements ActionListener{
             setBackground(new Color(235, 240, 230));
             setBorder(BorderFactory.createLineBorder(Color.gray));
         }
+        @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
