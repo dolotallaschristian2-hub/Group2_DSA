@@ -242,6 +242,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
         }
         else if(e.getSource() == trackbtn){
             trackMyOrder();
+            this.dispose();
             
         }else if(e.getSource() == back){
            Orderss r = new Orderss(customerid);
@@ -407,7 +408,7 @@ public class mcdoCustomer extends JFrame implements ActionListener {
                     );
 
                     // Open Mapclass after finding the order
-                    MapClass map = new MapClass();
+                    MapClass map = new MapClass(customerid);
                     map.setVisible(true);
 
                 } else {
