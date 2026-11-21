@@ -11,9 +11,16 @@ import java.sql.ResultSet;
 
 public class fooddeliveryGUI extends JFrame implements ActionListener {
     
+    private Color bgColor = new Color(250,232,218);
+    private Color paneColor = Color.WHITE;
+    private Color borderColor = new Color(224,229,235);
+    private Color textColor = new Color(28, 33, 39);
+    private Color primaryBtnBg = new Color (224, 90, 43);
+    private Color secondaryBtnBg = new Color(248, 250, 252);
+    
     private JLabel lblheader, username, password, remind;
     private JButton btnlogin, btnregister, back, fpass;
-    private JTextArea txauser;
+    private JTextField txauser;
     private JPasswordField jpfpass;
     private JPanel panel;
     private int customerid;
@@ -25,62 +32,81 @@ public class fooddeliveryGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
+        getContentPane().setBackground(bgColor);
         
         
         this.customerid = customerid;
         
         panel = new JPanel();
-        panel.setBounds(30, 80, 520, 500);
-        panel.setBackground(Color.gray);
+        panel.setBounds(40, 22, 520, 540);
+        panel.setBackground(paneColor);
         panel.setLayout(null);
+        panel.setBorder(BorderFactory.createLineBorder(borderColor,1,true));
         add(panel);
         
         //Setting of a Label Login Page
         lblheader = new JLabel ("Online Food Delivery System",SwingConstants.CENTER);
-        lblheader.setBounds(190, 25, 175, 50);
+        lblheader.setBounds(0, 32, 520, 40);
+        lblheader.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblheader.setForeground(textColor);
         panel.add(lblheader);
         
         
         //Labels
         username = new JLabel ("Username: ");
-        username.setBounds(180, 120, 90, 30);
+        username.setBounds(75, 115, 100, 34);
+        username.setFont(new Font("SansSerif", Font.BOLD, 14));
+        username.setForeground(textColor);
         panel.add(username);
         
         
         password = new JLabel ("Password: ");
-        password.setBounds(180, 160, 90, 30);
+        password.setBounds(75, 165, 110, 30);
+        password.setFont(new Font("SansSerif", Font.BOLD, 14));
+        password.setForeground(textColor);
         panel.add(password);
         
-        remind = new JLabel ("Do You Have Account?");
-        remind.setBounds(215, 330, 140, 30);
+        remind = new JLabel ("Do You Have Account?",SwingConstants.CENTER);
+        remind.setBounds(0, 320, 520, 26);
+        remind.setFont(new Font("SansSerif", Font.BOLD, 14));
+        remind.setForeground(textColor);
         panel.add(remind);
         
         //Text and Password
-        txauser = new JTextArea();
-        txauser.setBounds(250, 125, 130, 20);
+        txauser = new JTextField();
+        txauser.setBounds(170, 115, 185, 34);
+        txauser.setFont(new Font("SansSerif", Font.BOLD, 14));
+        txauser.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(borderColor,1,true),BorderFactory.createEmptyBorder(0,8,0,8)));
         panel.add(txauser);
         
         jpfpass = new JPasswordField();
-        jpfpass.setBounds(250, 165, 130, 20);
+        jpfpass.setBounds(170, 165, 185, 34);
+        txauser.setFont(new Font("SansSerif", Font.BOLD, 14));
+        txauser.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(borderColor,1,true),BorderFactory.createEmptyBorder(0,8,0,8)));
         panel.add(jpfpass);
         
         //Setting of Buttons
         btnlogin = new JButton("Login");
-        btnlogin.setBounds(230, 250, 100, 40);
-        btnlogin.setBackground(new Color(70, 160, 90));
+        btnlogin.setBounds(180, 235, 160, 42);
+        btnlogin.setFont(new Font("SansSerif", Font.BOLD,14));
+        btnlogin.setForeground(Color.WHITE);
+        btnlogin.setBackground(primaryBtnBg);
+        btnlogin.setFocusPainted(false);
+        btnlogin.setBorderPainted(false);
+        btnlogin.setOpaque(true);
         panel.add(btnlogin);
         
         btnregister = new JButton("Register");
-        btnregister.setBounds(230, 360, 100, 40);
+        btnregister.setBounds(190, 355, 140, 38);
         btnregister.setBackground(new Color(150, 70, 80));
         panel.add(btnregister);
         
         fpass = new JButton("Forget Password");
-        fpass.setBounds(200, 420, 140, 30);
+        fpass.setBounds(180, 405, 160, 36);
         panel.add(fpass);
         
         back = new JButton("<-----");
-        back.setBounds(20, 10, 80, 40);
+        back.setBounds(39, 30, 75, 30);
         add(back);
         
         
