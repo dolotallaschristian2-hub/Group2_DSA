@@ -22,8 +22,15 @@ public class Orderss extends JFrame implements ActionListener{
         
         this.customerid = customerid;
         
-        Color red = new Color(35, 35,35);
-        Color dirty = new Color (220, 220, 190);
+        // COLOR PALETTE
+        Color cream = new Color(248, 241, 231);
+        Color red = new Color(201, 54, 54);
+        Color lightRed = new Color(170, 43, 43);
+        Color peach = new Color(245, 217, 181);
+        Color brown = new Color(84, 45, 43);
+        Color white = Color.WHITE;
+
+        getContentPane().setBackground(cream);
         
         set = new JLabel("Order");
         set.setBounds(170, 30, 300, 35);
@@ -39,7 +46,7 @@ public class Orderss extends JFrame implements ActionListener{
         panel = new JPanel();
         panel.setLayout(null);
         panel.setBounds(180, 60, 350, 450);
-        panel.setBackground(dirty);
+        panel.setBackground(peach);
         add(panel);
         
         home = new JButton("Home");
