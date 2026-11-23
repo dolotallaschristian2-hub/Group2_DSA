@@ -52,36 +52,36 @@ public class Orderss extends JFrame implements ActionListener{
         home = new JButton("Home");
         home.setBounds(25, 30, 90, 40);
         home.setBackground(red);
-        home.setForeground(dirty);
+        home.setForeground(cream);
         side.add(home);
         
         browse = new JButton("Browse");
         browse.setBounds(25, 110, 90, 40);
         browse.setBackground(red);
-        browse.setForeground(dirty);
+        browse.setForeground(cream);
         side.add(browse);
         
         orders = new JButton("Orders");
         orders.setBounds(25, 190, 90, 40);
         orders.setBackground(red);
-        orders.setForeground(dirty);
+        orders.setForeground(cream);
         side.add(orders);
         
         profile = new JButton("Profile");
         profile.setBounds(25, 270, 90, 40);
         profile.setBackground(red);
-        profile.setForeground(dirty);
+        profile.setForeground(cream);
         side.add(profile);
         
         settings = new JButton("Settings");
         settings.setBounds(25, 340, 90, 40);
         settings.setBackground(red);
-        settings.setForeground(dirty);
+        settings.setForeground(cream);
         side.add(settings);
         
         logout = new JButton("Logout");
         logout.setBounds(25, 420, 90, 40);
-        logout.setForeground(dirty);
+        logout.setForeground(cream);
         logout.setBackground(red);
         side.add(logout);
         
