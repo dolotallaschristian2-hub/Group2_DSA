@@ -10,7 +10,7 @@ public class Homepage extends JFrame implements ActionListener {
 
     private int customerId;
 
-    private JLabel lblDashboard, bannerTitle;
+    private JLabel lblDashboard, bannerTitle, bannerSubtitle;
 
     private JPanel sidebar, main, banner, banner2;
 
@@ -19,10 +19,18 @@ public class Homepage extends JFrame implements ActionListener {
 
     private JTextField search;
 
+    // COLOR PALETTE
+    Color cream = new Color(248, 241, 231);
+    Color red = new Color(201, 54, 54);
+    Color lightRed = new Color(170, 43, 43);
+    Color peach = new Color(245, 217, 181);
+    Color brown = new Color(84, 45, 43);
+    Color white = Color.WHITE;
+
     public Homepage(int customerId) {
 
         setSize(600, 600);
-        setTitle("Bai N Eat");
+        setTitle("Bai N Eat - Food Delivery");
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -30,23 +38,18 @@ public class Homepage extends JFrame implements ActionListener {
 
         this.customerId = customerId;
 
-        Color background = new Color(245, 245, 245);
-        Color red = new Color(200, 35, 35);
-        Color black = new Color(35, 35, 35);
-        Color dirty = new Color(220, 220, 190);
-
         // SIDEBAR
         sidebar = new JPanel();
         sidebar.setBounds(0, 0, 150, 550);
         sidebar.setLayout(null);
-        sidebar.setBackground(black);
+        sidebar.setBackground(red);
         add(sidebar);
 
         // MAIN PANEL
         main = new JPanel();
         main.setLayout(null);
         main.setBounds(150, 0, 450, 550);
-        main.setBackground(background);
+        main.setBackground(cream);
         add(main);
 
         // BANNERS
@@ -54,84 +57,106 @@ public class Homepage extends JFrame implements ActionListener {
         banner.setLayout(null);
         banner.setBounds(20, 110, 400, 150);
         banner.setBackground(red);
+        banner.setBorder(BorderFactory.createLineBorder(lightRed, 1));
         main.add(banner);
 
         banner2 = new JPanel();
+        banner2.setLayout(null);
         banner2.setBounds(20, 280, 400, 150);
-        banner2.setBackground(Color.BLUE);
+        banner2.setBackground(peach);
         main.add(banner2);
 
         // SIDEBAR BUTTONS
         home = new JButton("Home");
         home.setBounds(25, 30, 90, 40);
-        home.setBackground(black);
-        home.setForeground(dirty);
+        styleNavButton(home, true);
         sidebar.add(home);
 
         browse = new JButton("Browse");
         browse.setBounds(25, 110, 90, 40);
-        browse.setBackground(black);
-        browse.setForeground(dirty);
+        styleNavButton(browse, false);
         sidebar.add(browse);
 
         orders = new JButton("Orders");
         orders.setBounds(25, 190, 90, 40);
-        orders.setBackground(black);
-        orders.setForeground(dirty);
+        styleNavButton(orders, false);
         sidebar.add(orders);
 
         profile = new JButton("Profile");
         profile.setBounds(25, 270, 90, 40);
-        profile.setBackground(black);
-        profile.setForeground(dirty);
+        styleNavButton(profile, false);
         sidebar.add(profile);
 
         settings = new JButton("Settings");
         settings.setBounds(25, 340, 90, 40);
-        settings.setBackground(black);
-        settings.setForeground(dirty);
+        styleNavButton(settings, false);
         sidebar.add(settings);
 
         logout = new JButton("Logout");
         logout.setBounds(25, 420, 90, 40);
-        logout.setBackground(black);
-        logout.setForeground(dirty);
+        styleNavButton(logout, false);
         sidebar.add(logout);
 
         // RESTAURANT BUTTONS
-        mcdo = new JButton("Mcdonalds");
+        mcdo = new JButton("McDonald's");
         mcdo.setBounds(25, 65, 100, 30);
+        styleRestaurantButton(mcdo);
         banner.add(mcdo);
 
         jollibee = new JButton("Jollibee");
         jollibee.setBounds(25, 110, 100, 30);
+        styleRestaurantButton(jollibee);
         banner.add(jollibee);
 
         manginasal = new JButton("Mang Inasal");
         manginasal.setBounds(205, 65, 110, 30);
+        styleRestaurantButton(manginasal);
         banner.add(manginasal);
 
         chowking = new JButton("Chowking");
         chowking.setBounds(205, 110, 100, 30);
+        styleRestaurantButton(chowking);
         banner.add(chowking);
 
         // SEARCH FIELD
         search = new JTextField();
         search.setBounds(200, 15, 200, 30);
+        search.setFont(new Font("Arial", Font.PLAIN, 12));
+        search.setBackground(white);
+        search.setForeground(brown);
+        search.setBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(peach, 2),
+                BorderFactory.createEmptyBorder(3, 8, 3, 8)
+            )
+        );
         search.setText("Search food or restaurant");
         main.add(search);
 
         // LABELS
-        lblDashboard = new JLabel("Food Deliver");
+        lblDashboard = new JLabel("Food Delivery");
         lblDashboard.setBounds(30, 15, 400, 40);
         lblDashboard.setFont(new Font("Arial", Font.BOLD, 25));
+        lblDashboard.setForeground(brown);
         main.add(lblDashboard);
 
-        bannerTitle = new JLabel("Delicious food right at your door");
-        bannerTitle.setBounds(25, 20, 400, 30);
+        bannerTitle = new JLabel("Delicious food right at your door!");
+        bannerTitle.setBounds(25, 15, 370, 30);
         bannerTitle.setFont(new Font("Arial", Font.BOLD, 18));
-        bannerTitle.setForeground(Color.WHITE);
+        bannerTitle.setForeground(white);
         banner.add(bannerTitle);
+
+        bannerSubtitle = new JLabel("Order your favorite meals with Bai N Eat.");
+        bannerSubtitle.setBounds(25, 45, 370, 25);
+        bannerSubtitle.setFont(new Font("Arial", Font.PLAIN, 12));
+        bannerSubtitle.setForeground(cream);
+        banner.add(bannerSubtitle);
+
+        JLabel restaurantTitle = new JLabel("Choose Your Restaurant");
+        restaurantTitle.setBounds(15, 10, 370, 30);
+        restaurantTitle.setFont(new Font("Arial", Font.BOLD, 18));
+        restaurantTitle.setForeground(brown);
+        banner2.add(restaurantTitle);
 
         // ACTION LISTENERS
         home.addActionListener(this);
@@ -145,6 +170,32 @@ public class Homepage extends JFrame implements ActionListener {
         jollibee.addActionListener(this);
         manginasal.addActionListener(this);
         chowking.addActionListener(this);
+    }
+
+    // SIDEBAR BUTTON DESIGN
+    private void styleNavButton(JButton button, boolean active) {
+        button.setFont(new Font("Arial", Font.BOLD, 13));
+        button.setForeground(white);
+        button.setBackground(active ? lightRed : red);
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    // RESTAURANT BUTTON DESIGN
+    private void styleRestaurantButton(JButton button) {
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setForeground(brown);
+        button.setBackground(white);
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setFocusPainted(false);
+        button.setBorder(
+            BorderFactory.createLineBorder(new Color(230, 195, 160), 2)
+        );
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     @Override
@@ -183,10 +234,10 @@ public class Homepage extends JFrame implements ActionListener {
         } else if (e.getSource() == logout) {
 
             int confirm = JOptionPane.showConfirmDialog(
-                    this,
-                    "Are you sure to log out?",
-                    "Log out",
-                    JOptionPane.YES_NO_OPTION
+                this,
+                "Are you sure to log out?",
+                "Log out",
+                JOptionPane.YES_NO_OPTION
             );
 
             if (confirm == JOptionPane.YES_OPTION) {
